@@ -54,3 +54,9 @@ Checked against the 11 papers in `literature/notes/wifi-fall-detection.md`. No s
 2. Buy 3 ESP32s; record CSI in one room.
 3. Train a first model (falls + empty/motion).
 4. Add Theft mode + auto switch → 2 floors → self-learning → full tests.
+
+## 7. Board placement and corner test
+- Put the sender board inside the room, not outside: walls weaken Wi-Fi.
+- Place the 2 receivers on different walls so every corner is close to at least one board.
+- Setup "corner test": the person lies down for a few seconds in each corner and the centre. If the dashboard shows a weak spot, move a board (or add a 3rd board in a big room).
+- In the paper, report detection rate per zone (centre / edge / corner). See literature/notes/wifi-sensing-coverage.md.

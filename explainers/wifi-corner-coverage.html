@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corner Fall Coverage</title>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1d2733;--muted:#5b6776;--line:#d5dde7;--navy:#1f3a5f;
+--good:#1b8a5a;--ok:#d08a00;--weak:#c0392b;--wifi:#2a6fdb;--wall:#8b98a8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11161d;--card:#1a212b;--ink:#e6ebf1;
+--muted:#9aa6b4;--line:#2d3744;--navy:#8fb3e8;--wall:#6b7787}}
+:root[data-theme="dark"]{--bg:#11161d;--card:#1a212b;--ink:#e6ebf1;--muted:#9aa6b4;--line:#2d3744;--navy:#8fb3e8;--wall:#6b7787}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:1.45rem;color:var(--navy);margin:.3em 0}
+h2{font-size:1.1rem;color:var(--navy);margin:0 0 .4em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+.answer{border-left:6px solid var(--good)}
+.step{display:inline-block;background:var(--navy);color:var(--bg);border-radius:20px;padding:0 10px;font-size:.8rem;font-weight:700;margin-bottom:6px}
+svg,canvas{width:100%;height:auto;display:block}
+.muted{color:var(--muted);font-size:.9rem}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+button{flex:1 1 200px;border:2px solid var(--navy);background:transparent;color:var(--navy);border-radius:10px;padding:9px;font:inherit;font-weight:600;cursor:pointer}
+button.on{background:var(--navy);color:var(--bg)}
+.meter{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--bg);font-weight:600}
+.bar{height:12px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;transition:width .3s}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+ol{padding-left:1.2em;margin:.3em 0}li{margin:.3em 0}
+</style>
+</head>
+<body>
+<main>
+<h1>Will it catch a fall in the corner?</h1>
+
+<div class="card answer">
+<b>Short answer: usually yes.</b> Wi-Fi does not travel as one thin straight line. It <b>bounces off walls, the floor and the ceiling</b>, so it fills the whole room.
+But a fall far from the boards gives a <b>weaker signal change</b>, so we place the boards smartly to make every corner safe.
+</div>
+
+<div class="card">
+<span class="step">STEP 1</span>
+<h2>Wi-Fi bounces, like light from a lamp</h2>
+<svg viewBox="0 0 340 250" role="img" aria-label="Room seen from above. Wi-Fi goes straight and also bounces off walls into corners.">
+  <rect x="60" y="20" width="210" height="210" fill="none" stroke="var(--wall)" stroke-width="6"/>
+  <text x="165" y="14" text-anchor="middle" font-size="11" fill="var(--muted)">Your room (seen from above)</text>
+  <!-- router outside -->
+  <rect x="14" y="113" width="30" height="22" rx="4" fill="var(--wifi)"/><text x="29" y="150" text-anchor="middle" font-size="10" fill="var(--ink)">Router</text>
+  <!-- receiver -->
+  <circle cx="250" cy="124" r="10" fill="var(--good)"/><text x="250" y="150" text-anchor="middle" font-size="10" fill="var(--ink)">Orb</text>
+  <!-- direct -->
+  <line x1="44" y1="124" x2="240" y2="124" stroke="var(--wifi)" stroke-width="3"/>
+  <!-- bounces -->
+  <polyline points="44,120 150,23 240,118" fill="none" stroke="var(--wifi)" stroke-width="2" stroke-dasharray="6 5"/>
+  <polyline points="44,128 150,227 240,130" fill="none" stroke="var(--wifi)" stroke-width="2" stroke-dasharray="6 5"/>
+  <polyline points="44,118 64,24 248,114" fill="none" stroke="var(--wifi)" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>
+  <polyline points="44,130 64,226 248,134" fill="none" stroke="var(--wifi)" stroke-width="1.5" stroke-dasharray="3 5" opacity=".7"/>
+  <text x="80" y="246" font-size="10" fill="var(--wifi)">— straight path</text>
+  <text x="190" y="246" font-size="10" fill="var(--wifi)">- - bounced paths</text>
+</svg>
+<p class="muted">A person anywhere in the room blocks or changes some of these paths, so the orb "feels" it.</p>
+</div>
+
+<div class="card">
+<span class="step">STEP 2</span>
+<h2>Strongest in the "egg zone"</h2>
+<svg viewBox="0 0 340 250" role="img" aria-label="An egg-shaped zone between router and orb is most sensitive; the corners are weaker.">
+  <rect x="60" y="20" width="210" height="210" fill="none" stroke="var(--wall)" stroke-width="6"/>
+  <ellipse cx="147" cy="124" rx="118" ry="62" fill="var(--good)" opacity=".22"/>
+  <ellipse cx="147" cy="124" rx="108" ry="32" fill="var(--good)" opacity=".35"/>
+  <rect x="14" y="113" width="30" height="22" rx="4" fill="var(--wifi)"/>
+  <circle cx="250" cy="124" r="10" fill="var(--good)"/>
+  <text x="150" y="128" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">strongest</text>
+  <g fill="var(--weak)" font-size="10" font-weight="700">
+    <circle cx="74" cy="34" r="9" opacity=".25"/><text x="88" y="38">weaker</text>
+    <circle cx="256" cy="216" r="9" opacity=".25"/><text x="186" y="220">weaker</text>
+  </g>
+</svg>
+<p class="muted">The zone between the sender and the receiver is shaped like an egg. Movement inside it changes the signal the most. Far corners change it less. Scientists call this the <b>Fresnel zone</b>.</p>
+</div>
+
+<div class="card">
+<span class="step">STEP 3</span>
+<h2>Try it: tap where you fall</h2>
+<div class="btns">
+  <button id="bA" class="on">Router outside + 1 orb</button>
+  <button id="bB">Our setup: sender inside + 2 orbs</button>
+</div>
+<canvas id="cv" width="600" height="538" aria-label="Coverage map of the room. Tap to place a fall."></canvas>
+<div class="legend">
+  <span style="--c:var(--good)">Strong</span><span style="--c:var(--ok)">OK</span><span style="--c:var(--weak)">Weak (may miss)</span>
+</div>
+<div class="meter" id="meter">Tap anywhere in the room.<div class="bar"><i id="fill"></i></div></div>
+<p class="muted">A simple picture to show the idea, not exact physics. Real homes are tested by walking and lying in each spot.</p>
+</div>
+
+<div class="card">
+<span class="step">STEP 4</span>
+<h2>How we make every corner safe</h2>
+<ol>
+<li><b>Put the sender inside the room.</b> Walls weaken Wi-Fi, so a router outside gives a weaker signal.</li>
+<li><b>Use 2 receivers</b> (already in our design) on different walls, so every corner is close to at least one.</li>
+<li><b>Do a "corner test" at setup.</b> Lie down for a few seconds in each corner. If the dashboard shows a weak spot, move a board.</li>
+</ol>
+</div>
+
+<p class="muted">Based on the Fresnel zone model: D. Zhang, H. Wang, D. Wu, "Toward Centimeter-Scale Human Activity Sensing with Wi-Fi Signals," IEEE Computer 50(1), 2017.</p>
+</main>
+
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const R=300,ox=90,oy=28,sc=482/R,W=482; // room is 300x300 units
+const setups={
+  A:{tx:[-40,150],rx:[[270,150]],wall:.65},
+  B:{tx:[150,12],rx:[[12,288],[288,288]],wall:1}
+};
+let cur='A',mark=null;
+const d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+function pair(p,tx,rx,w){const d1=d(p,tx),d2=d(p,rx),ex=d1+d2-d(tx,rx);
+  return Math.min(1,w*(.25+.75*Math.exp(-ex/55)+.4*Math.exp(-Math.min(d1,d2)/45)));}
+function strength(p){const s=setups[cur];let q=1;for(const r of s.rx)q*=1-pair(p,s.tx,r,s.wall);return 1-q;}
+function col(v){ // red -> amber -> green
+  const st=[[192,57,43],[208,138,0],[27,138,90]];const t=Math.max(0,Math.min(1,(v-.15)/.7))*2;
+  const i=Math.min(1,Math.floor(t)),f=t-i,a=st[i],b=st[i+1];
+  return a.map((x,k)=>Math.round(x+(b[k]-x)*f));}
+const X=u=>ox+u*sc,Y=v=>oy+v*sc;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function draw(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  const img=ctx.createImageData(W,W);
+  for(let y=0;y<W;y++)for(let x=0;x<W;x++){
+    const c=col(strength([x/sc,y/sc])),o=4*(y*W+x);
+    img.data[o]=c[0];img.data[o+1]=c[1];img.data[o+2]=c[2];img.data[o+3]=150;}
+  ctx.putImageData(img,ox,oy);
+  ctx.strokeStyle=css('--wall');ctx.lineWidth=8;ctx.strokeRect(ox,oy,W,W);
+  const s=setups[cur];
+  ctx.fillStyle=css('--wifi');ctx.fillRect(X(s.tx[0])-16,Y(s.tx[1])-12,32,24);
+  ctx.fillStyle='#fff';ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.fillText('TX',X(s.tx[0]),Y(s.tx[1])+5);
+  if(s.wall<1){ctx.fillStyle=css('--ink');ctx.font='bold 12px system-ui';ctx.fillText('Router',X(s.tx[0]),Y(s.tx[1])+30);ctx.fillText('(outside)',X(s.tx[0]),Y(s.tx[1])+45);ctx.font='bold 13px system-ui';}
+  for(const r of s.rx){ctx.beginPath();ctx.arc(X(r[0]),Y(r[1]),13,0,7);ctx.fillStyle='#1f3a5f';ctx.fill();
+    ctx.fillStyle='#fff';ctx.fillText('RX',X(r[0]),Y(r[1])+5);}
+  if(mark){ctx.font='34px system-ui';ctx.fillText('\u{1F9CD}',X(mark[0]),Y(mark[1])+12);}
+}
+function show(p){
+  const v=strength(p),pct=Math.round(v*100);
+  const [txt,c]=v>=.6?['Fall detected clearly ✔','--good']:v>=.38?['Fall detected (signal OK)','--ok']:['Weak signal: it might miss this fall','--weak'];
+  document.getElementById('meter').firstChild.textContent=txt+' – signal change '+pct+'%';
+  const f=document.getElementById('fill');f.style.width=pct+'%';f.style.background=css(c);
+}
+cv.addEventListener('click',e=>{const b=cv.getBoundingClientRect();
+  const u=((e.clientX-b.left)*cv.width/b.width-ox)/sc,v=((e.clientY-b.top)*cv.height/b.height-oy)/sc;
+  if(u<0||v<0||u>R||v>R)return;mark=[u,v];draw();show(mark);});
+function pick(k){cur=k;document.getElementById('bA').classList.toggle('on',k==='A');
+  document.getElementById('bB').classList.toggle('on',k==='B');draw();if(mark)show(mark);}
+document.getElementById('bA').onclick=()=>pick('A');document.getElementById('bB').onclick=()=>pick('B');
+draw();
+</script>
+</body>
+</html>

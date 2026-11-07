@@ -28,3 +28,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-07: Literature started: 9 verified Wi-Fi fall papers (literature/notes/wifi-fall-detection.md). Possible gap: self-learning + ESP32 + multi-person/floor + voice check.
 - 2026-11-07: Design v1 written (notes/design/home-guardian-v1.md). It has two modes and a self-learning model, and adds 2 competitor papers (SiFall, AR-Alarm). Phase: design → next, build the live dashboard (simulated data).
 - 2026-11-07: one-page PDF made (`paper/drafts/home-guardian-one-pager.pdf`). Next: live dashboard on simulated data.
+- 2026-11-07: Corner coverage answered (explainers/wifi-corner-coverage.html, literature/notes/wifi-sensing-coverage.md, design section 7). Next: live dashboard on simulated data.
