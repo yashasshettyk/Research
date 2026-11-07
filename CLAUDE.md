@@ -25,3 +25,12 @@ The main user is **Shravya Shetty**, who is new to Claude. Set up by Yashas Shet
 - Every word costs tokens. Write only what's needed; no filler, recaps, or repeating what was already said.
 - Don't restate the question, list what you did step by step, or add "let me know if…" padding.
 - Same for tool use: read only needed parts of files, keep command output short, avoid unnecessary calls.
+
+## Remember everything (long-term memory on GitHub)
+Nothing lives only in chat — chats get cleared and containers are deleted. After every meaningful exchange with Shravya, then commit and push to `main`:
+- **Log it** in `notes/log/YYYY-MM.md` (format in `notes/log/README.md`): what she asked, the answer/outcome, files touched, follow-ups. Skip pure greetings/small talk.
+- **Interests/decisions** → add a row to `notes/interests.md` when she shows interest in a topic or decides something.
+- **Real work** (research notes, code, drafts) → save in the right folder, not just in chat.
+- **Status** → update `notes/progress.md`.
+- Before answering about past work ("what did we do…", "remember when…"), search `notes/` with grep first; read only matching parts.
+- Keep entries short and clean so the history stays readable for years.
