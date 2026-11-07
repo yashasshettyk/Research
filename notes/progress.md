@@ -15,3 +15,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-07: Suggested first project idea (notes/ideas/project-idea-1.md); awaiting Shravya's branch/feedback.
 - 2026-11-07: CSE confirmed; long-term research path added to project-idea-1.
 - 2026-11-07: 8 topic options listed (notes/ideas/topic-options.md); awaiting her pick.
+- 2026-11-07: Round-2 list of 20 topics (notes/ideas/topic-options-2.md); awaiting pick.
