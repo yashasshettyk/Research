@@ -25,3 +25,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-07: Sim upgraded: 1–3 people, stairs, swap floors, night guard, Day 1 vs learned AI memory, fixed a false-alarm bug. Phase: design discussion (no implementation yet).
 - 2026-11-07: Community-problem ideas listed (notes/ideas/topic-options-4-community.md); top pick: ambulance green corridor.
 - 2026-11-07: Rare-idea list (notes/ideas/topic-options-5-rare.md); top pick: school-van child alert (Wi-Fi). She can't open .md files, so show lists in chat.
+- 2026-11-07: Literature started: 9 verified Wi-Fi fall papers (literature/notes/wifi-fall-detection.md). Possible gap: self-learning + ESP32 + multi-person/floor + voice check.
