@@ -49,10 +49,15 @@ All papers below were checked via web search or the paper's own page. Results ar
     - Learns normal activities and treats a fall as "outside normal" (anomaly detection), with self-supervised incremental learning.
     - Reported 94.1% of falls detected with only one false alarm over 3 days of live use. It covers falls only: no theft mode and no voice check.
     - https://arxiv.org/abs/2301.03773
+    - Hardware: COMPEX WPJ558 access points (Atheros QCA9558) with the Atheros CSI Tool, not ESP32 (from the arXiv PDF).
 11. **S. Li, X. Li, K. Niu, H. Wang, Y. Zhang, D. Zhang.** "AR-Alarm: An Adaptive and Robust Intrusion Detection System Leveraging CSI from Commodity Wi-Fi." *ICOST 2017*, LNCS 10461, Springer, pp. 211–223. DOI 10.1007/978-3-319-66188-9_18.
     - A Wi-Fi intruder detector that needs no calibration and ignores falling objects, curtains and pets.
     - It covers intruders only: no falls, and it can't tell family from a stranger.
     - https://shengjieli-pku.github.io/ShengjieLi/Paper/AR-Alarm.pdf
+
+## F. Similar non-peer-reviewed projects (seen 2026-11-07, not verified)
+- "Wi-Fi Guardian", a James Dyson Award 2026 entry: an ESP32 prototype that flags falls from a drop in signal variance, with ML planned as its next step. The name is close to ours. https://authoring.jamesdysonaward.org/en-US/2026/project/wi-fi-guardian
+- A Thai student symposium project (2026): ESP32-S3 + LSTM, reported 91.53% accuracy on EMPTY/WALK/FALL. https://symposium2026.pcshstrg.ac.th/uploads/projects/83/paper_pdf_20260716_162028.pdf
 
 ## Background survey
 - **Y. Ma, G. Zhou, S. Wang.** "WiFi Sensing with Channel State Information: A Survey." *ACM Computing Surveys*, 52(3), 2019/2020. DOI 10.1145/3310194. https://gzhou.pages.wm.edu/wp-content/blogs.dir/5736/files/sites/13/2017/12/WiFiSenseSurvey_CSUR19.pdf
