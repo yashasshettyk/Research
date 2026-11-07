@@ -20,23 +20,23 @@ body{
     var(--bg);
   min-height:100vh;
 }
-.wrap{max-width:1240px;margin:0 auto;padding:20px 16px 40px}
+.wrap{max-width:1260px;margin:0 auto;padding:20px 16px 40px}
 h1{font-size:1.55rem;margin:0;letter-spacing:-.01em}
 h1 span{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{margin:4px 0 16px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px}
-@media (max-width:920px){.grid{grid-template-columns:minmax(0,1fr)}}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px}
+@media (max-width:940px){.grid{grid-template-columns:minmax(0,1fr)}}
 .glass{background:var(--panel);border:1px solid var(--border);border-radius:18px;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   box-shadow:0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05)}
-.stage{overflow:hidden}
+.stage{overflow:hidden;align-self:start}
 .canvas-wrap{position:relative}
 #scene{display:block;width:100%;aspect-ratio:1000/660;height:auto}
-.caption{padding:12px 16px;border-top:1px solid var(--border);color:#cfd8ef;min-height:48px}
-.controls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;padding:14px 16px 16px;border-top:1px solid var(--border)}
+.caption{padding:12px 16px;border-top:1px solid var(--border);color:#cfd8ef;min-height:70px}
+.controls{display:flex;flex-wrap:wrap;gap:12px 14px;align-items:flex-end;padding:14px 16px 16px;border-top:1px solid var(--border)}
 .ctl label{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 5px 2px}
 .seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:3px;gap:2px}
-.seg button{background:transparent;border:0;color:var(--muted);padding:8px 12px;border-radius:9px;font:inherit;font-size:.9rem;cursor:pointer;transition:.2s}
+.seg button{background:transparent;border:0;color:var(--muted);padding:8px 11px;border-radius:9px;font:inherit;font-size:.88rem;cursor:pointer;transition:.2s}
 .seg button:hover{color:var(--ink)}
 .seg button.on{background:linear-gradient(135deg,rgba(79,216,255,.22),rgba(169,139,255,.22));color:var(--ink);box-shadow:inset 0 0 0 1px rgba(140,170,255,.35)}
 .actions{display:flex;gap:8px;margin-left:auto}
@@ -45,39 +45,60 @@ h1 span{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-back
 .btn-fall:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .btn-ghost{background:rgba(255,255,255,.06);color:var(--ink);box-shadow:inset 0 0 0 1px var(--border)}
 .btn:hover:not(:disabled){transform:translateY(-1px)}
-@media (max-width:560px){
+@media (max-width:600px){
   .ctl{width:100%}
   .seg{display:flex;width:100%}
-  .seg button{flex:1;white-space:normal;padding:8px 6px;font-size:.85rem}
+  .seg button{flex:1;white-space:normal;padding:8px 5px;font-size:.82rem}
   .actions{width:100%;margin-left:0}
   .actions .btn{flex:1}
 }
-/* side panel */
 .side{display:flex;flex-direction:column;gap:16px}
 .card{padding:16px}
 .card h3{margin:0 0 10px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.chart-box{margin-bottom:12px}
-.chart-box:last-child{margin-bottom:0}
-.chart-head{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;margin-bottom:4px;gap:8px}
+.row{margin-bottom:9px}
+.row:last-child{margin-bottom:0}
+.row-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.84rem;margin-bottom:3px}
+.rt{display:flex;gap:6px;align-items:center}
+.real{font-size:.7rem;color:var(--muted);white-space:nowrap}
 .tag{font-size:.72rem;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.06);color:var(--muted);white-space:nowrap}
-.tag.g{color:var(--green);background:rgba(75,240,166,.12)}
-canvas.chart{display:block;width:100%;height:84px;border-radius:10px;background:rgba(4,8,20,.55);box-shadow:inset 0 0 0 1px var(--border)}
-.ai-label{font-size:1.25rem;font-weight:700;margin:2px 0}
+.tag.c{color:var(--cyan);background:rgba(79,216,255,.12)}
+.tag.a{color:var(--amber);background:rgba(255,192,77,.14)}
+.tag.r{color:#fff;background:rgba(255,93,108,.45)}
+canvas.spark{display:block;width:100%;height:42px;border-radius:9px;background:rgba(4,8,20,.55);box-shadow:inset 0 0 0 1px var(--border)}
+.hint{font-size:.78rem;color:var(--muted);margin:10px 0 0}
+.ai-label{font-size:1.22rem;font-weight:700;margin:2px 0}
+.ai-label.k-r{color:var(--red)} .ai-label.k-a{color:var(--amber)}
 .ai-sub{color:var(--muted);font-size:.88rem;min-height:1.3em}
-.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.07);margin:10px 0 4px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .3s, background .3s}
-.conf{font-size:.75rem;color:var(--muted)}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px}
+.gv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.gv div{padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--border)}
+.gv small{display:block;font-size:.7rem;color:var(--muted);line-height:1.3}
+.gv b{font-size:1.3rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
 .steps div{text-align:center;font-size:.72rem;padding:7px 2px;border-radius:9px;background:rgba(255,255,255,.04);color:var(--muted);box-shadow:inset 0 0 0 1px var(--border);transition:.3s}
 .steps div.on{color:var(--ink);background:rgba(79,216,255,.12);box-shadow:inset 0 0 0 1px rgba(79,216,255,.4)}
 .steps div.hot{animation:pulse 1s infinite}
 .steps div.alert{color:#fff;background:rgba(255,93,108,.35);box-shadow:inset 0 0 0 1px var(--red)}
 @keyframes pulse{50%{box-shadow:inset 0 0 0 1px rgba(79,216,255,.9),0 0 14px rgba(79,216,255,.4)}}
-.legend{display:grid;gap:7px;font-size:.86rem}
+.who{font-size:.74rem;color:var(--muted);margin-top:3px;min-height:1.1em;line-height:1.35}
+.mem-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.mem-day{font-size:1.15rem;font-weight:700}
+.bar{margin-bottom:10px}
+.bar-h{display:flex;justify-content:space-between;font-size:.82rem;color:#cfd8ef;margin-bottom:4px}
+.bar-t{height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar-f{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.bar.done .bar-f{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.bar-u{font-size:.72rem;color:var(--muted);margin-top:3px}
+.bar.done .bar-u{color:var(--green)}
+table.cmp{width:100%;border-collapse:collapse;font-size:.82rem}
+.cmp th{font-weight:600;color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;padding:0 0 6px;text-align:center}
+.cmp th:first-child{text-align:left}
+.cmp td{padding:6px 0;border-top:1px solid var(--border);color:#cfd8ef;vertical-align:top}
+.cmp td+td{text-align:center;width:74px}
+.cmp small{display:block;color:var(--muted);font-size:.68rem;line-height:1.25}
+.legend{display:grid;gap:6px;font-size:.84rem}
 .legend span{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
-/* overlays */
-.toast{position:absolute;top:14px;right:14px;width:260px;max-width:calc(100% - 28px);padding:14px;border-radius:18px;
-  background:rgba(16,20,38,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+.toast{position:absolute;top:14px;right:14px;width:270px;max-width:calc(100% - 28px);padding:14px;border-radius:18px;
+  background:rgba(16,20,38,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   box-shadow:0 18px 50px rgba(0,0,0,.55);transform:translateY(-20px) scale(.96);opacity:0;pointer-events:none;transition:.45s cubic-bezier(.2,.9,.3,1.2)}
 .toast.show{transform:none;opacity:1;pointer-events:auto}
 .toast.red{border:1px solid rgba(255,93,108,.6);box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 30px rgba(255,93,108,.25)}
@@ -86,321 +107,541 @@ canvas.chart{display:block;width:100%;height:84px;border-radius:10px;background:
 .t-title{font-weight:700;font-size:1.05rem}
 .t-body{font-size:.86rem;color:#cfd8ef;margin:4px 0 10px}
 .t-actions{display:flex;gap:6px}
-.t-actions button{flex:1;border:0;border-radius:10px;padding:8px;font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+.t-actions button{flex:1;border:0;border-radius:10px;padding:8px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
 .t-call{background:var(--red);color:#fff}
 .t-amber{background:var(--amber);color:#1a1300}
 .t-ok{background:rgba(255,255,255,.1);color:var(--ink)}
-@media (max-width:560px){.toast{width:210px;padding:10px;top:8px;right:8px}.t-body{margin:2px 0 6px}}
+@media (max-width:600px){.toast{width:215px;padding:10px;top:8px;right:8px}.t-body{margin:2px 0 6px;font-size:.8rem}}
 .foot{color:var(--muted);font-size:.82rem;margin-top:14px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>📶 Wi-Fi Fall Alert · <span>Live House Simulation</span></h1>
-  <p class="sub">Watch Wi-Fi waves fill a two-floor home, bounce off a person, and see how a fall is caught (or missed).</p>
+  <h1>📶 Wi-Fi Home Guardian · <span>Live Simulation</span></h1>
+  <p class="sub">Several people, two floors and stairs. See what Wi-Fi can track, and what it honestly can't.</p>
 
   <div class="grid">
     <section class="glass stage">
       <div class="canvas-wrap">
-        <canvas id="scene" aria-label="Animated two-floor house with Wi-Fi waves"></canvas>
-
-        <div class="toast red" id="alertCard" role="alert">
+        <canvas id="scene" aria-label="Animated two-floor house with people and Wi-Fi waves"></canvas>
+        <div class="toast" id="toast" role="alert">
           <div class="t-head"><span>🏠 HomeCare</span><span>now</span></div>
-          <div class="t-title">🚨 Fall detected</div>
-          <div class="t-body" id="alertBody">Bedroom · First floor<br>No movement for 2 seconds</div>
-          <div class="t-actions"><button class="t-call">📞 Call</button><button class="t-ok" data-reset>I'm OK</button></div>
-        </div>
-
-        <div class="toast amber" id="missCard" role="alert">
-          <div class="t-head"><span>🏠 HomeCare</span><span>now</span></div>
-          <div class="t-title">❌ Fall missed</div>
-          <div class="t-body">The concrete floor blocked the Wi-Fi signal, so the receiver downstairs couldn't see it.</div>
-          <div class="t-actions"><button class="t-amber" id="fixBtn">Add ESP32 boards upstairs</button></div>
+          <div class="t-title" id="tTitle"></div>
+          <div class="t-body" id="tBody"></div>
+          <div class="t-actions" id="tActions"></div>
         </div>
       </div>
-
       <div class="caption" id="caption"></div>
-
       <div class="controls">
         <div class="ctl">
-          <label>Setup</label>
-          <div class="seg" id="modeSeg">
-            <button data-mode="A" class="on">One router only</button>
-            <button data-mode="B">Router + ESP32 boards</button>
+          <label>Wi-Fi setup</label>
+          <div class="seg" id="setupSeg">
+            <button data-v="A">One router</button>
+            <button data-v="B">Board on each floor</button>
+            <button data-v="C">Board in every room</button>
           </div>
         </div>
         <div class="ctl">
-          <label>Person is in</label>
-          <div class="seg" id="locSeg">
-            <button data-loc="0" class="on">Living room (ground)</button>
-            <button data-loc="1">Bedroom (1st floor)</button>
+          <label>People</label>
+          <div class="seg" id="countSeg"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div>
+        </div>
+        <div class="ctl">
+          <label>AI memory</label>
+          <div class="seg" id="memSeg"><button data-v="0">Day 1 (new)</button><button data-v="1">🧠 After 1 month</button></div>
+        </div>
+        <div class="ctl">
+          <label>Try a situation</label>
+          <div class="seg" id="scenSeg">
+            <button data-v="normal">Normal day</button>
+            <button data-v="swap">↕ Two swap floors</button>
+            <button data-v="guard">🌙 Night guard</button>
           </div>
         </div>
         <div class="actions">
-          <button class="btn btn-fall" id="fallBtn">⚠️ Simulate a fall</button>
-          <button class="btn btn-ghost" data-reset>↺ Reset</button>
+          <button class="btn btn-fall" id="fallBtn">⚠️ Make someone fall</button>
+          <button class="btn btn-ghost" id="resetBtn">↺ Restart</button>
         </div>
       </div>
     </section>
 
     <aside class="side">
       <div class="glass card">
-        <h3>Live Wi-Fi signal</h3>
-        <div class="chart-box">
-          <div class="chart-head"><span>📡 Ground floor receiver</span><span class="tag" id="tag0"></span></div>
-          <canvas class="chart" id="c0"></canvas>
-        </div>
-        <div class="chart-box">
-          <div class="chart-head"><span>📡 First floor receiver</span><span class="tag" id="tag1"></span></div>
-          <canvas class="chart" id="c1"></canvas>
-        </div>
+        <h3>What each receiver feels</h3>
+        <div id="rows"></div>
+        <p class="hint">Receivers only feel movement. They can't see names, colours or faces.</p>
       </div>
 
       <div class="glass card">
         <h3>AI brain</h3>
-        <div class="ai-label" id="aiLabel">🚶 Walking</div>
+        <div class="ai-label" id="aiLabel"></div>
         <div class="ai-sub" id="aiSub"></div>
-        <div class="bar"><i id="aiBar"></i></div>
-        <div class="conf" id="aiConf"></div>
-        <div class="steps" id="steps">
-          <div>1 Sense</div><div>2 Clean</div><div>3 AI decides</div><div>4 Alert</div>
+        <div class="gv">
+          <div><small>AI thinks</small><b id="gAI">0</b><small id="gAISub">people moving</small></div>
+          <div><small>Really at home</small><b id="gReal">0</b><small id="gRealSub"></small></div>
         </div>
+        <div class="steps" id="steps"><div>1 Sense</div><div>2 Clean</div><div>3 AI decides</div><div>4 Alert</div></div>
       </div>
 
       <div class="glass card">
-        <h3>What you're seeing</h3>
+        <h3>🧠 Self-learning memory</h3>
+        <div class="mem-top"><span class="mem-day" id="memDay">Day 1</span><span class="tag" id="memTag">just installed</span></div>
+        <div id="bars"></div>
+        <p class="hint"><b>How it learns by itself:</b> every day it records normal movement in your home and retrains its own model at night. Nobody has to label anything.</p>
+        <p class="hint">👍 Lessons from your taps: <b id="lessons">0</b>. Every "I'm OK" or "It's only the cat" tap fixes a mistake.</p>
+      </div>
+
+      <div class="glass card">
+        <h3>Can Wi-Fi really do this?</h3>
+        <table class="cmp">
+          <tr><th></th><th>Day 1</th><th>After learning</th></tr>
+          <tr><td>Is anyone moving?</td><td>✅</td><td>✅</td></tr>
+          <tr><td>A fall when alone</td><td>✅</td><td>✅</td></tr>
+          <tr><td>How many people?</td><td>🟡<small>moving only</small></td><td>✅<small>1–3 people</small></td></tr>
+          <tr><td>Pet or person?</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Who is who?</td><td>❌</td><td>🟡<small>small family</small></td></tr>
+          <tr><td>A fall while others move</td><td>🟡<small>"possible"</small></td><td>✅<small>mostly</small></td></tr>
+          <tr><td>Upstairs, with only 1 router</td><td>❌</td><td>❌<small>needs a board</small></td></tr>
+        </table>
+        <p class="hint">No sensor is 100% (cameras and smartwatches also miss). So there is a <b>safety net</b>: whenever it isn't sure, it asks "Are you OK?" out loud, and if nobody answers it calls the family.</p>
+        <p class="hint">🎓 The 🟡 and ❌ rows are open problems, which makes them great M.Tech or PhD topics.</p>
+      </div>
+
+      <div class="glass card">
+        <h3>Colours in the house</h3>
         <div class="legend">
-          <div><span style="background:var(--cyan)"></span>Wi-Fi waves &amp; direct path</div>
-          <div><span style="background:var(--green)"></span>Path bouncing off the person (this changes when they move)</div>
-          <div><span style="background:var(--violet)"></span>Path bouncing off the ceiling</div>
+          <div><span style="background:var(--cyan)"></span>Wi-Fi waves and the direct path</div>
+          <div><span style="background:linear-gradient(90deg,#ff9ad5,#ffd36e,#6ff2c0)"></span>Signal bouncing off each person (in their colour)</div>
           <div><span style="background:#7d8597;border-radius:2px"></span>Concrete floor: blocks most Wi-Fi</div>
         </div>
       </div>
     </aside>
   </div>
-  <p class="foot">Simplified simulation for learning. Real systems record “Channel State Information” (fine signal details) with ESP32 boards and use a trained AI model.</p>
+  <p class="foot">This is a simplified simulation for learning. The signals are modelled, not real recordings. Real systems record "Channel State Information" (fine signal details) with ESP32 boards and use a trained AI model.</p>
 </div>
 
 <script>
 (() => {
 const $ = id => document.getElementById(id);
 const cv = $('scene'), ctx = cv.getContext('2d');
-const W = 1000, H = 660;
+const W = 1000, H = 660, DT = 0.02, NB = 300;
 let S = 1, DPR = 1, FS = 12;
+const C = { cyan:'79,216,255', violet:'169,139,255', red:'255,93,108', amber:'255,192,77' };
 
-const C = { cyan:'79,216,255', green:'75,240,166', violet:'169,139,255', red:'255,93,108', amber:'255,192,77' };
-const HOUSE = { x:100, y:180, w:800, h:420 };
-const FLOORS = [
-  { x:100, y:400, w:800, h:200, fy:600, ceil:400 },   // ground
-  { x:100, y:180, w:800, h:200, fy:380, ceil:180 }    // first
-];
-const RANGE = [[240,420],[200,380]];
-const DEV = {
-  router:{ x:152, y:546, floor:0, type:'router', label:'Wi-Fi router · sender', ly:-34 },
-  r0:{ x:532, y:518, floor:0, type:'rx', label:'ESP32 · receiver', ly:-24 },
-  s1:{ x:136, y:300, floor:1, type:'tx', label:'ESP32 · sender', ly:-24, b:true },
-  r1:{ x:592, y:290, floor:1, type:'rx', label:'ESP32 · receiver', ly:-24, b:true }
+/* ---------- house geometry ---------- */
+const FY = [600, 380];                                   // floor line: ground, first
+const ST = { tx:735, ty:380, bx:925, by:600 };            // stairs top & bottom
+const ST_LEN = Math.hypot(ST.bx - ST.tx, ST.by - ST.ty);
+const ZONES = {
+  bath:   { name:'Bathroom',    floor:1,  where:'Bathroom · 1st floor',        x:[90,250] },
+  bed:    { name:'Bedroom',     floor:1,  where:'Bedroom · 1st floor',         x:[310,700] },
+  stairs: { name:'Stairs',      floor:-1, where:'Near the stairs' },
+  living: { name:'Living room', floor:0,  where:'Living room · ground floor',  x:[100,470] },
+  kitchen:{ name:'Kitchen',     floor:0,  where:'Kitchen · ground floor',      x:[530,700] }
 };
-const LINKS = [['router','r0',0],['s1','r1',1]];
-const RX = [{ key:'r0', floor:0 }, { key:'r1', floor:1 }];
+const ADJ = { bath:['bed'], bed:['bath'], living:['kitchen'], kitchen:['living','stairs'], stairs:['kitchen'] };
+const TX = { router:{ x:170, y:546, floor:0, label:'Wi-Fi router' }, s1:{ x:110, y:300, floor:1, label:'ESP32 sender' } };
+const SETUPS = {
+  A:{ tx:['router'], rx:[ { cov:'floor0', name:'Ground floor', x:650, y:520, s:'router', label:'Receiver' } ] },
+  B:{ tx:['router','s1'], rx:[
+      { cov:'floor1', name:'1st floor', x:650, y:300, s:'s1', label:'Receiver' },
+      { cov:'floor0', name:'Ground floor', x:650, y:520, s:'router', label:'Receiver' } ] },
+  C:{ tx:['router','s1'], rx:[
+      { cov:'bath', name:'Bathroom', x:230, y:250, s:'s1', label:'Rx · Bath' },
+      { cov:'bed', name:'Bedroom', x:650, y:300, s:'s1', label:'Rx · Bed' },
+      { cov:'stairs', name:'Stairs', x:900, y:440, s:'router', label:'Rx · Stairs' },
+      { cov:'living', name:'Living room', x:420, y:520, s:'router', label:'Rx · Living' },
+      { cov:'kitchen', name:'Kitchen', x:650, y:520, s:'router', label:'Rx · Kitchen' } ] }
+};
+const DEFS = [
+  { name:'Ajji', rgb:'255,154,213', A:16, f1:7.2, f2:12.9, speed:.9 },
+  { name:'Ajja', rgb:'255,211,110', A:14, f1:8.3, f2:14.1, speed:.85 },
+  { name:'Anu',  rgb:'111,242,192', A:18, f1:6.4, f2:11.3, speed:1.15 }
+];
+const STARTS = [ {floor:1, x:440}, {floor:0, x:320}, {floor:0, x:610} ];
+const INTRUDER = { name:'Intruder', rgb:'255,120,130', A:17, f1:7.7, f2:13.3, speed:1.05 };
+const PET = { name:'Cat', rgb:'214,190,160', A:6, f1:11.5, f2:17.3, speed:1.4 };
+// What the AI learns by itself, and on which day it has learned enough
+const LEARN = [
+  { k:'rooms', icon:'🏠', name:'Room map & stairs', days:3, gives:'follows people between rooms, counts people sitting still' },
+  { k:'pets',  icon:'🐈', name:'Pets, fans & curtains', days:10, gives:'no false alarms from pets' },
+  { k:'walk',  icon:'🚶', name:"Each person's walking style", days:21, gives:'who is who, sure about falls even when others move' }
+];
 
-const state = { mode:'A', loc:0, time:0 };
-const P = { x:260, dir:1, phase:'walk', t0:0, lieT:0, angle:0, lift:0, wp:0 };
-const det = { alert:false, missed:false };
+const state = { setup:'B', count:2, scen:'normal', time:0, missed:null, L:0, learnTo:0, lessons:0 };
+const dayNow = () => Math.round(1 + state.L*29);
+const know = k => dayNow() >= LEARN.find(l => l.k === k).days;
+let people = [], rxs = [], falls = [], guard = null, swapInfo = null;
 const rings = { router:[], s1:[] }, ringT = { router:0, s1:.3 };
-const N = 240;
-const charts = [0,1].map(i => ({ el:$('c'+i), data:new Array(N).fill(0) }));
-let sampleAcc = 0;
-
-// stars (seeded)
 let seed = 7; const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
 const stars = Array.from({length:90}, () => ({ x:rnd()*W, y:rnd()*175, r:rnd()*1.3+.3, p:rnd()*6 }));
 
-const active = d => !d.b || state.mode === 'B';
-const covered = () => state.mode === 'B' || state.loc === 0;
+/* ---------- people ---------- */
+function makePerson(def, at){
+  return { ...def, loc:{ kind:'floor', floor:at.floor, x:at.x }, plan:[{ k:'pause', d:.3+Math.random() }], phase:'pause',
+    ph1:Math.random()*6, ph2:Math.random()*6, ph3:Math.random()*6, wp:0, dir:1, angle:0, lift:0, alpha:1, fade:0, gone:false, fdir:1 };
+}
+function buildPeople(){ people = DEFS.slice(0, state.count).map((d,i) => makePerson(d, STARTS[i])); }
+function footPos(p){
+  if (p.loc.kind === 'stair'){ const u = p.loc.u; return { x:ST.tx + u*(ST.bx-ST.tx), y:ST.ty + u*(ST.by-ST.ty) }; }
+  return { x:p.loc.x, y:FY[p.loc.floor] };
+}
+function personPoint(p){
+  const f = footPos(p), s = Math.sin(p.angle), c = Math.cos(p.angle);
+  if (p.pet) return { x:f.x, y:f.y - 12 };
+  return { x:f.x + 40*s, y:f.y + p.lift - 40*c };
+}
+function zoneOf(p){
+  if (p.loc.kind === 'stair') return 'stairs';
+  const x = p.loc.x;
+  if (p.loc.floor === 1) return x < 280 ? 'bath' : 'bed';
+  return x < 500 ? 'living' : (x < 725 ? 'kitchen' : 'stairs');
+}
+function planTrip(p, floor, x){
+  p.plan = [];
+  if (p.loc.floor !== floor){
+    if (p.loc.floor === 1) p.plan.push({ k:'walk', x:730 }, { k:'stair', down:true });
+    else p.plan.push({ k:'walk', x:ST.bx }, { k:'stair', down:false });
+  }
+  p.plan.push({ k:'walk', x });
+}
+function newTrip(p){
+  if (p.pet){ planTrip(p, 0, 120 + Math.random()*560); p.plan.push({ k:'pause', d:.5 + Math.random()*1.5 }); return; }
+  const zs = p.intruder ? ['living','kitchen','bed','bath','living'] : ['bath','bed','bed','living','living','kitchen'];
+  let z = zs[Math.floor(Math.random()*zs.length)];
+  if (z === zoneOf(p) && Math.random() < .5) z = zs[Math.floor(Math.random()*zs.length)];
+  const Z = ZONES[z];
+  planTrip(p, Z.floor, Z.x[0] + Math.random()*(Z.x[1]-Z.x[0]));
+  p.plan.push({ k:'pause', d: Math.random() < .25 ? 3 + Math.random()*3 : .8 + Math.random()*2 });
+}
+function stepPerson(p, t){
+  if (p.fade){ p.alpha += p.fade*DT;
+    if (p.alpha <= 0){ p.alpha = 0; p.gone = true; p.fade = 0; }
+    if (p.alpha >= 1){ p.alpha = 1; p.fade = 0; } }
+  if (p.gone) return;
+  if (p.phase === 'fall'){
+    const q = Math.min(1, (t - p.t0)/.6);
+    p.angle = Math.PI/2*q*q*p.fdir; p.lift = -7*q;
+    if (q >= 1){ p.phase = 'lie'; p.lieT = t; }
+    return;
+  }
+  if (p.phase === 'lie') return;
+  if (p.fallQueued && p.loc.kind === 'floor'){ doFall(p); return; }
+  if (!p.plan.length) newTrip(p);
+  const seg = p.plan[0];
+  if (seg.k === 'pause'){ p.phase = 'pause'; seg.d -= DT; if (seg.d <= 0) p.plan.shift(); return; }
+  p.phase = 'walk'; p.wp += DT*7*p.speed;
+  if (seg.k === 'walk'){
+    const sp = 46*p.speed*DT, dx = seg.x - p.loc.x;
+    if (Math.abs(dx) <= sp){ p.loc.x = seg.x; p.plan.shift(); }
+    else { p.loc.x += Math.sign(dx)*sp; p.dir = Math.sign(dx); }
+  } else {
+    if (p.loc.kind !== 'stair') p.loc = { kind:'stair', u: seg.down ? 0 : 1 };
+    const du = 34*p.speed*DT/ST_LEN;
+    p.loc.u += seg.down ? du : -du; p.dir = seg.down ? 1 : -1;
+    if (seg.down ? p.loc.u >= 1 : p.loc.u <= 0){
+      p.loc = seg.down ? { kind:'floor', floor:0, x:ST.bx } : { kind:'floor', floor:1, x:730 };
+      p.plan.shift();
+    }
+  }
+}
+function eligible(p){ return !p.gone && !p.intruder && !p.pet &&(p.phase === 'walk' || p.phase === 'pause') && !p.fallQueued; }
+function doFall(p){
+  if (!eligible(p) && !p.fallQueued) return;
+  if (p.loc.kind === 'stair'){ p.fallQueued = true; return; }
+  const z = zoneOf(p), Z = ZONES[z], cx = Z.x ? (Z.x[0]+Z.x[1])/2 : 830;
+  p.fdir = p.loc.x > cx ? -1 : 1;
+  p.phase = 'fall'; p.t0 = state.time; p.plan = []; p.fallQueued = false;
+  falls.push({ p, t0:state.time, zone:z, floor:p.loc.floor, detected:false, missed:false });
+}
+function getUp(p){ p.phase = 'pause'; p.angle = 0; p.lift = 0; p.fallQueued = false; p.plan = [{ k:'pause', d:1 }]; }
+
+/* ---------- signal model ---------- */
+// How strongly a receiver "feels" a person: same area = 1, through an inside wall = weak, through the concrete floor = almost nothing.
+function weight(rx, p){
+  const st = p.loc.kind === 'stair', u = st ? p.loc.u : 0;
+  if (rx.cov === 'floor0') return st ? .1 + .9*u*u : (p.loc.floor === 0 ? (p.loc.x >= 725 ? .85 : 1) : .06);
+  if (rx.cov === 'floor1') return st ? .1 + .9*(1-u)*(1-u) : (p.loc.floor === 1 ? 1 : .06);
+  const z = zoneOf(p);
+  if (z === rx.cov) return 1;
+  if (st){ if (rx.cov === 'bed') return u < .35 ? .25 : .05; if (rx.cov === 'kitchen') return u > .65 ? .2 : .05; }
+  if (ADJ[rx.cov].includes(z)) return .12;
+  return ZONES[z].floor === ZONES[rx.cov].floor ? .06 : .03;
+}
+function inArea(rx, p){
+  const st = p.loc.kind === 'stair';
+  if (rx.cov === 'floor0') return st ? p.loc.u >= .5 : p.loc.floor === 0;
+  if (rx.cov === 'floor1') return st ? p.loc.u < .5 : p.loc.floor === 1;
+  return zoneOf(p) === rx.cov;
+}
+function act(p, t){
+  switch (p.phase){
+    case 'walk': return p.A*(Math.sin(p.f1*t + p.ph1) + .45*Math.sin(p.f2*t + p.ph2) + .2*Math.sin(3.1*t + p.ph3));
+    case 'pause': return (p.pet ? .4 : 1)*(2*Math.sin(1.6*t + p.ph1) + 1.2*Math.sin(4.3*t + p.ph2));
+    case 'fall': { const q = Math.max(0, (t - p.t0)/.6); return 130*Math.sin(q*Math.PI*3.5)*(1 - .35*q) + (Math.random()-.5)*20; }
+    case 'lie': { const s = t - p.lieT; return 26*Math.exp(-s*5)*Math.sin(s*25) + .9*Math.sin(1.7*t + p.ph1); }
+  }
+  return 0;
+}
+function rms(a, from, to){
+  const n = a.length, s0 = Math.max(0, n - from), s1 = n - to; let s = 0;
+  for (let i = s0; i < s1; i++) s += a[i]*a[i];
+  return Math.sqrt(s/Math.max(1, s1 - s0));
+}
+function sampleAll(t){
+  const acts = people.map(p => p.gone ? 0 : act(p, t)*p.alpha);
+  rxs.forEach(rx => {
+    let v = (Math.random() - .5)*3.2;
+    people.forEach((p,i) => { if (!p.gone) v += weight(rx, p)*acts[i]; });
+    rx.buf.push(v); if (rx.buf.length > NB) rx.buf.shift();
+    analyse(rx, t);
+  });
+}
+/* ---------- the "AI" (simple rules that mimic what a trained model does) ---------- */
+function analyse(rx, t){
+  const a = rx.ai, b = rx.buf;
+  a.long = rms(b, 100, 0);
+  a.g = a.g*.9 + .1*(a.long*a.long/156);
+  if (a.state === 'checking'){
+    if (t - a.tSpike >= 2.4){
+      // Day 1: needs the whole area to go quiet. Learned: it separates the fallen person's own pattern from the others.
+      const quiet = rms(b, 70, 0) < 3.4, sep = know('walk') && a.fall && a.fall.p.phase === 'lie';
+      // Learned: if nobody's own pattern shows a fall, it was just people walking together, so no alarm.
+      if (know('walk') && !a.fall && !quiet){ a.state = 'moving'; return; }
+      a.state = quiet || sep ? 'fall' : 'possible'; onVerdict(rx);
+    }
+    return;
+  }
+  if (a.state === 'fall' || a.state === 'possible') return;
+  const short = rms(b, 15, 0), base = rms(b, 125, 25);
+  if (short > Math.max(42, 2.8*base)){ a.state = 'checking'; a.tSpike = t; onSpike(rx, t); return; }
+  a.state = a.long > 3.2 ? 'moving' : 'still';
+}
+const peopleIn = rx => people.filter(p => !p.gone && p.alpha > .5 && inArea(rx, p));
+function guessOf(rx){
+  if (know('rooms')) return peopleIn(rx).filter(p => !p.pet || !know('pets')).length; // tracked, so still people count too
+  const a = rx.ai;
+  if (a.state === 'still' || a.long <= 3.2 || a.g < .35) return 0;
+  return Math.min(3, Math.max(1, Math.round(a.g)));
+}
+function where(rx){
+  if (rx.cov === 'floor0') return 'Ground floor (room unknown)';
+  if (rx.cov === 'floor1') return '1st floor (room unknown)';
+  return ZONES[rx.cov].where;
+}
+function onSpike(rx, t){
+  const f = falls.find(f => !f.detected && t >= f.t0 && t - f.t0 < 1.5);
+  if (f){ f.detected = true; f.rx = rx; }
+  rx.ai.fall = f || null;
+}
+function onVerdict(rx){
+  if (state.scen === 'guard') return;
+  const ok = { label:"I'm OK", cls:'t-ok', fn:imOk }, call = { label:'📞 Call', cls:'t-call', fn:b => b.textContent = '📞 Calling…' };
+  const f = rx.ai.fall, who = know('walk') && f ? `<b>${f.p.name}</b> · ` : '';
+  if (rx.ai.state === 'fall') showToast('red', '🚨 Fall detected', `${who}${where(rx)}<br>Big jump, then no movement. 🔊 Asked "Are you OK?": no answer.`, [call, ok]);
+  else showToast('amber', '❓ Possible fall', `${where(rx)}<br>Others are moving nearby, so it can't be sure. 🔊 Asking "Are you OK?"…`, [call, ok]);
+}
+function checkMissed(t){
+  falls.forEach(f => {
+    if (f.detected || f.missed || t - f.t0 < 3.2) return;
+    f.missed = true; state.missed = f;
+    const why = state.setup === 'A' && f.floor === 1 ? " The concrete floor blocked the Wi-Fi. Learning can't fix that; it needs a board upstairs." : '';
+    showToast('amber', '❌ Fall missed', `${f.p.name} fell in the ${ZONES[f.zone].name.toLowerCase()}, but no receiver felt it.${why}`,
+      state.setup === 'A' ? [{ label:'Add a board on each floor', cls:'t-amber', fn:() => setSetup('B') }] : [{ label:"I'm OK", cls:'t-ok', fn:imOk }]);
+  });
+}
+function imOk(){ state.lessons++; people.forEach(p => { if (p.phase === 'fall' || p.phase === 'lie') getUp(p); }); clearAlerts(); }
+function clearAlerts(){
+  hideToast(); falls = []; state.missed = null;
+  rxs.forEach(r => { if (['checking','fall','possible'].includes(r.ai.state)) r.ai.state = 'still'; r.ai.fall = null; });
+}
+
+/* ---------- night guard ---------- */
+function startGuard(){
+  people.forEach(p => { p.fade = -1.6; });
+  const cat = makePerson(PET, { floor:0, x:330 }); cat.pet = true; cat.plan = [{ k:'pause', d:4.5 }];
+  people.push(cat);
+  guard = { t0:state.time, armed:false, entered:0, real:false, petAlarm:false, rx:null };
+}
+function spawnIntruder(i){
+  const p = makePerson({ ...INTRUDER, f1:INTRUDER.f1 + i*.9, name: state.count > 1 ? `Intruder ${i+1}` : 'Intruder' }, { floor:0, x:75 });
+  p.intruder = true; p.alpha = 0; p.fade = 1.5;
+  planTrip(p, 0, 240 + Math.random()*160); p.plan.push({ k:'pause', d:.6 });
+  people.push(p);
+}
+function guardStep(t){
+  if (state.scen !== 'guard' || !guard) return;
+  const e = t - guard.t0;
+  if (!guard.armed && e > 3) guard.armed = true;
+  if (!guard.armed) return;
+  if (guard.entered < state.count && e > 11 + guard.entered*2.5) spawnIntruder(guard.entered++);
+  const police = { label:'📞 Call police', cls:'t-call', fn:b => b.textContent = '📞 Calling…' };
+  const moving = rxs.filter(r => r.ai.state === 'moving' || r.ai.state === 'checking');
+  const human = moving.find(r => peopleIn(r).some(p => p.intruder));
+  if (human && !guard.real){
+    guard.real = true; guard.rx = human;
+    const id = know('walk');
+    showToast('red', id ? '🚨 Stranger inside!' : (guard.petAlarm ? '🚨 Movement again!' : '🚨 Someone is inside!'),
+      `${where(human)}<br>${id ? "This walking style matches nobody in the family." : 'Movement while nobody is home.'}`,
+      [police, { label:"It's family", cls:'t-ok', fn:() => { state.lessons++; setScenario('normal'); } }]);
+  } else if (!human && !guard.real && !guard.petAlarm && moving.length && !know('pets')){
+    guard.petAlarm = true; guard.rx = moving[0];
+    showToast('red', '🚨 Someone is inside!', `${where(moving[0])}<br>Movement while nobody is home.`,
+      [police, { label:"It's only the cat", cls:'t-ok', fn:() => { state.lessons++; hideToast(); } }]);
+  }
+}
+
+/* ---------- swap floors ---------- */
+function startSwap(){
+  const [a, b] = people;
+  a.loc = { kind:'floor', floor:1, x:600 }; a.speed = 1; planTrip(a, 0, 300); a.plan.push({ k:'pause', d:3 });
+  b.loc = { kind:'floor', floor:0, x:700 }; b.speed = 1; planTrip(b, 1, 440); b.plan.push({ k:'pause', d:3 });
+  if (people[2]){ people[2].loc = { kind:'floor', floor:0, x:180 }; people[2].plan = [{ k:'pause', d:9 }]; }
+  swapInfo = { a, b, done:false };
+}
+
+/* ---------- simulation step ---------- */
+function step(){
+  const t = (state.time += DT), tx = SETUPS[state.setup].tx;
+  if (state.L !== state.learnTo) state.L = state.learnTo > state.L ? Math.min(state.learnTo, state.L + DT/4) : state.learnTo;
+  for (const k in rings){
+    if (!tx.includes(k)){ rings[k].length = 0; continue; }
+    ringT[k] -= DT; if (ringT[k] <= 0){ rings[k].push(0); ringT[k] += .6; }
+    rings[k] = rings[k].map(r => r + 250*DT).filter(r => r < 700);
+  }
+  people.forEach(p => stepPerson(p, t));
+  guardStep(t);
+  sampleAll(t);
+  checkMissed(t);
+  if (swapInfo && !swapInfo.done){
+    const { a, b } = swapInfo;
+    if (a.loc.kind === 'floor' && a.loc.floor === 0 && b.loc.kind === 'floor' && b.loc.floor === 1) swapInfo.done = true;
+  }
+}
+
+/* ---------- drawing helpers ---------- */
+function rr(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
+function dot(x,y,r){ ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill(); }
+function glow(x,y,r,rgb,a){ const g = ctx.createRadialGradient(x,y,0,x,y,r); g.addColorStop(0,`rgba(${rgb},${a})`); g.addColorStop(1,`rgba(${rgb},0)`); ctx.fillStyle = g; dot(x,y,r); }
+function pill(text,x,y,rgb='234,240,255',border='rgba(140,170,255,.28)',size=1){
+  const fs = FS*size; ctx.font = `600 ${fs}px Inter,system-ui,sans-serif`;
+  const tw = ctx.measureText(text).width, ph = fs*1.7, pw = tw + fs*1.2;
+  const lx = Math.max(4, Math.min(W-pw-4, x-pw/2));
+  rr(lx, y-ph/2, pw, ph, ph/2); ctx.fillStyle = 'rgba(8,12,28,.82)'; ctx.fill();
+  ctx.strokeStyle = border; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = `rgb(${rgb})`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(text, lx+fs*.6, y+.5);
+}
+function polyLen(p){ let L = 0; for (let i=1;i<p.length;i++) L += Math.hypot(p[i].x-p[i-1].x, p[i].y-p[i-1].y); return L; }
+function pointAt(p,d){ for (let i=1;i<p.length;i++){ const a=p[i-1], b=p[i], l=Math.hypot(b.x-a.x,b.y-a.y); if (d<=l){ const u=d/l; return {x:a.x+(b.x-a.x)*u, y:a.y+(b.y-a.y)*u}; } d-=l; } return p[p.length-1]; }
 
 function resize(){
   const w = cv.clientWidth || 800;
   DPR = Math.min(window.devicePixelRatio || 1, 2); S = w / W;
   cv.width = Math.round(w*DPR); cv.height = Math.round(w*H/W*DPR);
-  FS = Math.min(26, Math.max(12, 10.5/S));
-  charts.forEach(c => { c.el.width = Math.round(c.el.clientWidth*DPR); c.el.height = Math.round(c.el.clientHeight*DPR); });
+  FS = Math.min(28, Math.max(12, 10.5/S));
+  sizeSparks();
 }
+function sizeSparks(){ rxs.forEach(r => { if (r.el){ r.el.width = Math.round(r.el.clientWidth*DPR); r.el.height = Math.round(r.el.clientHeight*DPR); } }); }
 window.addEventListener('resize', resize);
 
-/* ---------- helpers ---------- */
-function rr(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
-function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
-function glow(x,y,r,rgb,a){ const g = ctx.createRadialGradient(x,y,0,x,y,r); g.addColorStop(0,`rgba(${rgb},${a})`); g.addColorStop(1,`rgba(${rgb},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill(); }
-function pill(text,x,y,rgb='234,240,255',border='rgba(140,170,255,.28)',size=1){
-  const fs = FS*size; ctx.font = `600 ${fs}px Inter,system-ui,sans-serif`;
-  const tw = ctx.measureText(text).width, ph = fs*1.7, pw = tw + fs*1.2;
-  const lx = Math.max(4, Math.min(W-pw-4, x-pw/2));
-  rr(lx, y-ph/2, pw, ph, ph/2); ctx.fillStyle = 'rgba(8,12,28,.8)'; ctx.fill();
-  ctx.strokeStyle = border; ctx.lineWidth = 1; ctx.stroke();
-  ctx.fillStyle = `rgb(${rgb})`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(text, lx+fs*.6, y+.5);
-}
-function personPoint(){
-  const fy = FLOORS[state.loc].fy + P.lift, c = Math.cos(P.angle), s = Math.sin(P.angle), ly = -40;
-  return { x:P.x - ly*s, y:fy + ly*c };
-}
-function polyLen(p){ let L=0; for(let i=1;i<p.length;i++) L += Math.hypot(p[i].x-p[i-1].x, p[i].y-p[i-1].y); return L; }
-function pointAt(p,d){ for(let i=1;i<p.length;i++){ const a=p[i-1], b=p[i], l=Math.hypot(b.x-a.x,b.y-a.y); if(d<=l){ const u=d/l; return {x:a.x+(b.x-a.x)*u, y:a.y+(b.y-a.y)*u}; } d-=l; } return p[p.length-1]; }
-
-/* ---------- signal model ---------- */
-function activity(t){
-  if (P.phase === 'walk') return 16*Math.sin(t*7.2) + 7*Math.sin(t*12.7+1.3) + 3*Math.sin(t*3.1);
-  if (P.phase === 'fall'){ const p = (t-P.t0)/.6; return 52*Math.sin(p*Math.PI*3.5)*(1-.35*p) + (Math.random()-.5)*14; }
-  const since = t - P.lieT; return 22*Math.exp(-since*5)*Math.sin(since*25) + 1.2*Math.sin(t*1.8);
-}
-function sample(rx,t){
-  const k = rx.floor === state.loc ? 1 : .07;
-  return k*activity(t) + (Math.random()-.5)*3.2;
-}
-
-/* ---------- update ---------- */
-function update(dt){
-  const t = (state.time += dt);
-  for (const k of ['router','s1']){
-    if (!active(DEV[k])) { rings[k].length = 0; continue; }
-    ringT[k] -= dt; if (ringT[k] <= 0){ rings[k].push(0); ringT[k] += .6; }
-    rings[k] = rings[k].map(r => r + 250*dt).filter(r => r < 700);
-  }
-  if (P.phase === 'walk'){
-    const [a,b] = RANGE[state.loc];
-    P.x += P.dir*45*dt; if (P.x > b){ P.x = b; P.dir = -1; } if (P.x < a){ P.x = a; P.dir = 1; }
-    P.wp += dt*7;
-  } else if (P.phase === 'fall'){
-    const p = Math.min(1, (t-P.t0)/.6);
-    P.angle = Math.PI/2*p*p; P.lift = -7*p;
-    if (p >= 1){ P.phase = 'lie'; P.lieT = t; }
-  }
-  sampleAcc += dt;
-  while (sampleAcc >= .02){
-    sampleAcc -= .02;
-    RX.forEach((rx,i) => { const on = active(DEV[rx.key]); charts[i].data.push(on ? sample(rx,t) : 0); charts[i].data.shift(); });
-  }
-  updateAI(t);
-}
-
-/* ---------- AI panel ---------- */
-let lastAI = '';
-function setAI(label, sub, conf, barCol, step, mode){
-  const key = label+sub+Math.round(conf)+step+mode;
-  if (key === lastAI) return; lastAI = key;
-  $('aiLabel').textContent = label; $('aiSub').textContent = sub;
-  $('aiBar').style.width = conf + '%';
-  $('aiBar').style.background = barCol;
-  $('aiConf').textContent = conf > 0 ? `AI confidence: ${Math.round(conf)}%` : 'AI confidence: none';
-  [...$('steps').children].forEach((el,i) => {
-    el.className = '';
-    if (i <= step) el.classList.add('on');
-    if (i === step && mode === 'hot') el.classList.add('hot');
-    if (i === 3 && mode === 'alert') el.className = 'alert';
-  });
-}
-const GRAD = 'linear-gradient(90deg,var(--cyan),var(--violet))';
-function updateAI(t){
-  const cov = covered();
-  if (P.phase === 'walk'){
-    if (cov) setAI('🚶 Walking', 'Normal movement. All good.', 94 + Math.round(Math.sin(t)*2), GRAD, 2, 'hot');
-    else setAI('❓ Can\'t see clearly', 'No receiver on the person\'s floor', 12, 'var(--amber)', 1, '');
-    return;
-  }
-  if (P.phase === 'fall'){
-    if (cov) setAI('⚠️ Sudden big change!', 'The signal jumped. Possible fall', 70, 'var(--amber)', 2, 'hot');
-    else setAI('… tiny flicker', 'Signal from upstairs is too weak', 10, 'var(--amber)', 1, '');
-    return;
-  }
-  const since = t - P.lieT;
-  if (cov){
-    if (since < 2) setAI('⏳ Checking for movement…', `No movement for ${since.toFixed(1)} s`, Math.min(95, 72 + since*11), 'var(--amber)', 2, 'hot');
-    else {
-      setAI('🚨 FALL DETECTED', 'Alert sent to family', 97, 'var(--red)', 3, 'alert');
-      if (!det.alert){ det.alert = true;
-        $('alertBody').innerHTML = (state.loc ? 'Bedroom · First floor' : 'Living room · Ground floor') + '<br>No movement for 2 seconds';
-        $('alertCard').classList.add('show'); }
-    }
-  } else {
-    if (since < 2.4) setAI('❓ Not sure', 'Signal too weak to tell', 8, 'var(--amber)', 1, '');
-    else { setAI('❌ Fall missed', 'The concrete floor blocked the signal', 0, 'var(--red)', 1, '');
-      if (!det.missed){ det.missed = true; $('missCard').classList.add('show'); } }
-  }
-}
-
-/* ---------- drawing ---------- */
+/* ---------- scene ---------- */
+const lightsOn = () => state.scen !== 'guard';
 function drawSky(t){
-  const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#070b1c'); g.addColorStop(1,'#101a38');
+  const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#070b1c'); g.addColorStop(1, lightsOn() ? '#101a38' : '#0a1028');
   ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-  stars.forEach(s => { ctx.fillStyle = `rgba(220,230,255,${.35+.35*Math.sin(t*1.5+s.p)})`; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,7); ctx.fill(); });
-  glow(905,62,90,'200,215,255',.18);
-  ctx.fillStyle = '#e9eeff'; ctx.beginPath(); ctx.arc(905,62,22,0,7); ctx.fill();
-  ctx.fillStyle = '#0c1430'; ctx.beginPath(); ctx.arc(915,55,20,0,7); ctx.fill();
+  stars.forEach(s => { ctx.fillStyle = `rgba(220,230,255,${.35+.35*Math.sin(t*1.5+s.p)})`; dot(s.x,s.y,s.r); });
+  glow(915,62,90,'200,215,255',.18);
+  ctx.fillStyle = '#e9eeff'; dot(915,62,22);
+  ctx.fillStyle = '#0c1430'; dot(925,55,20);
   const gg = ctx.createLinearGradient(0,600,0,H); gg.addColorStop(0,'#123326'); gg.addColorStop(1,'#07120d');
   ctx.fillStyle = gg; ctx.fillRect(0,600,W,H-600);
   ctx.strokeStyle = 'rgba(75,240,166,.25)'; ctx.lineWidth = 2; line(0,601,W,601);
 }
-function drawHouseBody(){
-  // roof
-  ctx.beginPath(); ctx.moveTo(70,184); ctx.lineTo(500,66); ctx.lineTo(930,184); ctx.closePath();
-  const rg = ctx.createLinearGradient(0,66,0,184); rg.addColorStop(0,'#1d2850'); rg.addColorStop(1,'#111a36');
-  ctx.fillStyle = rg; ctx.fill(); ctx.strokeStyle = 'rgba(170,195,255,.45)'; ctx.lineWidth = 3; ctx.stroke();
-  // rooms
-  FLOORS.forEach(f => {
-    const g = ctx.createLinearGradient(0,f.y,0,f.y+f.h); g.addColorStop(0,'#19233f'); g.addColorStop(1,'#10172e');
-    ctx.fillStyle = g; ctx.fillRect(f.x,f.y,f.w,f.h);
-  });
-  // warm lamps
-  [[300,196,170],[770,196,120],[380,416,170],[740,416,130]].forEach(([x,y,r]) => {
-    glow(x,y,r,'255,190,120',.11);
-    ctx.strokeStyle = 'rgba(200,210,240,.25)'; ctx.lineWidth = 1.5; line(x, y-16, x, y);
-    ctx.fillStyle = 'rgba(255,214,150,.9)'; ctx.beginPath(); ctx.arc(x,y+2,4,0,7); ctx.fill();
-  });
-  // furniture
-  const fill = 'rgba(170,190,255,.10)', st = 'rgba(170,190,255,.22)';
-  const box = (x,y,w,h,r=6) => { rr(x,y,w,h,r); ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = st; ctx.lineWidth = 1.2; ctx.stroke(); };
-  box(470,350,136,30,6); box(600,322,10,58,3); box(480,340,38,12,5);            // bed
-  box(680,338,150,42,18); box(830,250,8,40,3); box(700,226,60,46,6);            // bathtub, shower, mirror
-  box(240,560,130,40,10); box(232,548,22,52,8); box(356,548,22,52,8);           // sofa
-  box(112,556,82,6,2); box(118,562,5,38,2); box(184,562,5,38,2);                // router table
-  box(600,552,220,48,4); box(832,500,56,100,6);                                 // kitchen counter, fridge
-  [[506,532,52],[110,314,52],[566,304,52]].forEach(([x,y,w]) => box(x,y,w,5,2)); // shelves
+function drawStairs(){
+  const n = 11, run = (ST.bx-ST.tx)/n, rise = (ST.by-ST.ty)/n, k = rise/run;
+  ctx.beginPath(); ctx.moveTo(ST.bx, ST.by);
+  let x = ST.bx, y = ST.by;
+  for (let i = 0; i < n; i++){ y -= rise; ctx.lineTo(x,y); x -= run; ctx.lineTo(x,y); }
+  ctx.lineTo(ST.tx, ST.ty + 24); ctx.lineTo(ST.bx - 24/k, ST.by); ctx.closePath();
+  const g = ctx.createLinearGradient(ST.tx,ST.ty,ST.bx,ST.by); g.addColorStop(0,'rgba(150,170,230,.2)'); g.addColorStop(1,'rgba(150,170,230,.1)');
+  ctx.fillStyle = g; ctx.fill(); ctx.strokeStyle = 'rgba(170,190,255,.38)'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.strokeStyle = 'rgba(200,215,255,.4)'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  const r0 = { x:ST.bx-6, y:ST.by-56 }, r1 = { x:ST.tx+4, y:ST.ty-52 };
+  line(r0.x, r0.y, r1.x, r1.y);
+  ctx.lineWidth = 2;
+  [0, .33, .66, 1].forEach(f => { const px = r0.x + (r1.x-r0.x)*f, py = r0.y + (r1.y-r0.y)*f; line(px, py, px, ST.ty + (px-ST.tx)*(ST.by-ST.ty)/(ST.bx-ST.tx)); });
+  ctx.lineCap = 'butt';
 }
-function clipRegion(i){
-  ctx.beginPath();
-  if (i < 2){ const f = FLOORS[i]; ctx.rect(f.x,f.y,f.w,f.h); ctx.clip(); }
-  else { ctx.rect(0,0,W,H); ctx.rect(HOUSE.x,HOUSE.y,HOUSE.w,HOUSE.h); ctx.clip('evenodd'); }
+function drawHouseBody(t){
+  const on = lightsOn();
+  ctx.beginPath(); ctx.moveTo(30,184); ctx.lineTo(500,62); ctx.lineTo(970,184); ctx.closePath();
+  let g = ctx.createLinearGradient(0,62,0,184); g.addColorStop(0,'#1d2850'); g.addColorStop(1,'#111a36');
+  ctx.fillStyle = g; ctx.fill(); ctx.strokeStyle = 'rgba(170,195,255,.45)'; ctx.lineWidth = 3; ctx.stroke();
+  g = ctx.createLinearGradient(0,180,0,600);
+  g.addColorStop(0, on ? '#19233f' : '#0e1428'); g.addColorStop(1, on ? '#10172e' : '#090e1e');
+  ctx.fillStyle = g; ctx.fillRect(60,180,880,420);
+  [[170,196,120],[500,196,170],[885,196,95],[280,416,170],[610,416,130],[860,416,105]].forEach(([x,y,r]) => {
+    if (on) glow(x,y,r,'255,190,120',.11);
+    ctx.strokeStyle = 'rgba(200,210,240,.25)'; ctx.lineWidth = 1.5; line(x,y-16,x,y);
+    ctx.fillStyle = on ? 'rgba(255,214,150,.9)' : 'rgba(120,130,160,.45)'; dot(x,y+2,4);
+  });
+  const box = (x,y,w,h,r=6) => { rr(x,y,w,h,r); ctx.fillStyle = 'rgba(170,190,255,.10)'; ctx.fill(); ctx.strokeStyle = 'rgba(170,190,255,.22)'; ctx.lineWidth = 1.2; ctx.stroke(); };
+  box(120,342,140,38,16);                                   // bathtub
+  box(84,310,52,5,2); box(204,260,52,5,2);                   // shelves
+  box(304,252,56,128,6);                                    // wardrobe
+  box(410,350,150,30,6); box(554,322,10,58,3); box(420,340,38,12,5); // bed
+  box(624,310,52,5,2);
+  box(884,350,28,30,6); ctx.fillStyle = 'rgba(75,240,166,.22)'; dot(898,338,10); dot(889,330,8); dot(907,328,8); // plant
+  box(270,560,130,40,10); box(262,548,22,52,8); box(386,548,22,52,8); // sofa
+  box(132,556,80,6,2); box(138,562,5,38,2); box(202,562,5,38,2);       // router table
+  box(394,530,52,5,2); box(530,556,180,44,4); box(624,530,52,5,2); box(874,450,52,5,2);
+  drawStairs();
+  ctx.font = `700 ${FS*.78}px Inter,system-ui,sans-serif`; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillStyle = 'rgba(180,195,230,.55)';
+  [['BATHROOM',74,192],['BEDROOM · 1ST FLOOR',294,192],['STAIRS',846,192],['LIVING ROOM · GROUND',74,412],['KITCHEN',514,412]]
+    .forEach(([s,x,y]) => ctx.fillText(s,x,y));
 }
+const REG = [
+  { f:0, r:[60,400,665,200] }, { f:0, r:[725,380,215,220], st:true },
+  { f:1, r:[60,180,665,200] }, { f:1, r:[725,180,215,200], st:true }, { f:-1 }
+];
 function drawWaves(){
-  const senders = ['router','s1'].filter(k => active(DEV[k]));
-  for (let region = 0; region < 3; region++){
-    ctx.save(); clipRegion(region);
+  const tx = SETUPS[state.setup].tx;
+  REG.forEach(reg => {
+    ctx.save(); ctx.beginPath();
+    if (reg.f < 0){ ctx.rect(0,0,W,H); ctx.rect(60,180,880,420); ctx.clip('evenodd'); }
+    else { ctx.rect(...reg.r); ctx.clip(); }
     ctx.globalCompositeOperation = 'lighter';
-    senders.forEach(k => {
-      const d = DEV[k], f = region === 2 ? .22 : (region === d.floor ? 1 : .08);
-      glow(d.x, d.y, 430, C.cyan, .13*f);
+    tx.forEach(k => {
+      const d = TX[k], f = reg.f < 0 ? .22 : (reg.f === d.floor ? 1 : (reg.st ? .3 : .08));
+      glow(d.x, d.y, 430, C.cyan, .12*f);
       rings[k].forEach(r => {
-        const a = .6*(1 - r/700)*f; if (a < .008) return;
+        const a = .55*(1 - r/700)*f; if (a < .008) return;
         ctx.beginPath(); ctx.arc(d.x,d.y,r,0,7);
         ctx.strokeStyle = `rgba(${C.cyan},${a*.22})`; ctx.lineWidth = 9; ctx.stroke();
         ctx.strokeStyle = `rgba(${C.cyan},${a})`; ctx.lineWidth = 1.6; ctx.stroke();
       });
     });
     ctx.restore();
-  }
+  });
 }
-function drawStructure(){
-  ctx.strokeStyle = 'rgba(170,195,255,.55)'; ctx.lineWidth = 8; ctx.lineCap = 'butt';
-  ctx.strokeRect(HOUSE.x, HOUSE.y, HOUSE.w, HOUSE.h);
-  ctx.lineWidth = 6; line(620,180,620,292); line(560,400,560,505);
-  // concrete slab
-  const g = ctx.createLinearGradient(0,380,0,400); g.addColorStop(0,'#6b7389'); g.addColorStop(1,'#3d4357');
-  ctx.fillStyle = g; ctx.fillRect(96,380,808,20);
-  ctx.save(); ctx.beginPath(); ctx.rect(96,380,808,20); ctx.clip();
-  ctx.strokeStyle = 'rgba(20,24,36,.45)'; ctx.lineWidth = 2;
-  for (let x = 90; x < 920; x += 14) line(x,402,x+22,378);
-  ctx.restore();
-  ctx.strokeStyle = 'rgba(200,210,235,.5)'; ctx.lineWidth = 1; line(96,380.5,904,380.5);
+function drawStructure(t){
+  ctx.strokeStyle = 'rgba(170,195,255,.55)'; ctx.lineWidth = 8; ctx.strokeRect(60,180,880,420);
+  rr(53,504,14,96,3); ctx.fillStyle = '#3b2e4a'; ctx.fill(); ctx.strokeStyle = 'rgba(255,200,150,.55)'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.fillStyle = 'rgba(255,192,77,.9)'; dot(63,554,2.2);
+  ctx.strokeStyle = 'rgba(170,195,255,.55)'; ctx.lineWidth = 6; line(280,180,280,280); line(500,400,500,500);
+  [[56,725],[832,944]].forEach(([a,b]) => {
+    const g = ctx.createLinearGradient(0,380,0,400); g.addColorStop(0,'#6b7389'); g.addColorStop(1,'#3d4357');
+    ctx.fillStyle = g; ctx.fillRect(a,380,b-a,20);
+    ctx.save(); ctx.beginPath(); ctx.rect(a,380,b-a,20); ctx.clip();
+    ctx.strokeStyle = 'rgba(20,24,36,.45)'; ctx.lineWidth = 2;
+    for (let x = a-10; x < b+10; x += 14) line(x,402,x+22,378);
+    ctx.restore();
+    ctx.strokeStyle = 'rgba(200,210,235,.5)'; ctx.lineWidth = 1; line(a,380.5,b,380.5);
+  });
+  ctx.strokeStyle = 'rgba(200,215,255,.35)'; ctx.lineWidth = 2;
+  line(836,340,940,340); for (let x = 838; x < 940; x += 14) line(x,340,x,380);
+  if (guard && (guard.real || guard.petAlarm)){ ctx.fillStyle = `rgba(255,60,80,${.05 + .05*Math.sin(t*8)})`; ctx.fillRect(60,180,880,420); }
 }
 function drawPath(pts, rgb, alpha, dashed, speed=230){
   ctx.save(); ctx.globalCompositeOperation = 'lighter';
@@ -408,141 +649,306 @@ function drawPath(pts, rgb, alpha, dashed, speed=230){
   if (dashed) ctx.setLineDash([5,7]);
   ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y); for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y); ctx.stroke();
   ctx.setLineDash([]);
-  const L = polyLen(pts), n = Math.max(3, Math.round(L/70)), sp = L/n;
+  const L = polyLen(pts), n = Math.max(3, Math.round(L/75)), sp = L/n;
   for (let i = 0; i < n; i++){
     const p = pointAt(pts, (state.time*speed + i*sp) % L);
-    glow(p.x, p.y, 11, rgb, alpha*.9);
-    ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.beginPath(); ctx.arc(p.x,p.y,2,0,7); ctx.fill();
+    glow(p.x, p.y, 10, rgb, alpha*.9);
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`; dot(p.x,p.y,1.9);
   }
   ctx.restore();
 }
-function drawPaths(){
-  const pp = personPoint(), personRGB = P.phase === 'walk' ? C.green : (det.alert ? C.red : C.amber);
-  LINKS.forEach(([s,r,floor]) => {
-    const A = DEV[s], B = DEV[r]; if (!active(A)) return;
-    drawPath([A,B], C.cyan, .55, false);
-    drawPath([A,{x:(A.x+B.x)/2, y:FLOORS[floor].ceil+6},B], C.violet, .5, false);
-    if (floor === state.loc) drawPath([A,pp,B], personRGB, .95, false, 260);
-  });
-  if (!covered()) drawPath([DEV.router, pp, DEV.r0], C.green, .12, true);
+function personCol(p){
+  if (p.phase === 'fall' || p.phase === 'lie'){
+    const r = rxs.find(r => r.ai.fall && r.ai.fall.p === p);
+    return r && r.ai.state === 'fall' ? C.red : C.amber;
+  }
+  return p.rgb;
 }
-function drawDevice(d, ghost){
+let blocked = [];
+function drawPaths(){
+  rxs.forEach(rx => {
+    const s = TX[rx.s]; drawPath([s, rx], C.cyan, .45, false);
+    if (state.setup !== 'C') drawPath([s, { x:(s.x+rx.x)/2, y:(rx.y < 390 ? 180 : 400) + 6 }, rx], C.violet, .38, false);
+  });
+  blocked = [];
+  people.forEach(p => {
+    if (p.gone) return;
+    let best = null, bw = 0; rxs.forEach(rx => { const w = weight(rx, p); if (w > bw){ bw = w; best = rx; } });
+    const pp = personPoint(p);
+    if (best && bw >= .5){
+      const a = (p.phase === 'walk' || p.phase === 'fall' ? .95 : .4)*p.alpha;
+      drawPath([TX[best.s], pp, best], personCol(p), a, false, 260);
+    } else if (best && state.setup === 'A' && p.loc.kind === 'floor' && p.loc.floor === 1){
+      drawPath([TX.router, pp, best], p.rgb, .14*p.alpha, true); blocked.push(pp);
+    }
+  });
+}
+function drawDevice(d, type, ghost){
   const t = state.time;
   ctx.save(); ctx.translate(d.x, d.y);
   if (ghost){
     ctx.setLineDash([4,4]); ctx.strokeStyle = 'rgba(170,190,255,.35)'; ctx.lineWidth = 1.5;
     rr(-15,-10,30,20,4); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(170,190,255,.5)'; ctx.font = `700 14px system-ui`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('+',0,1);
+    ctx.fillStyle = 'rgba(170,190,255,.5)'; ctx.font = '700 14px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('+',0,1);
     ctx.restore(); return;
   }
-  const rgb = d.type === 'rx' ? C.green : C.cyan;
-  glow(0,0,30 + 4*Math.sin(t*4), rgb, .28);
-  if (d.type === 'router'){
+  const rgb = type === 'rx' ? '75,240,166' : C.cyan;
+  glow(0,0,28 + 4*Math.sin(t*4), rgb, .26);
+  if (type === 'router'){
     ctx.strokeStyle = '#9fb3d9'; ctx.lineWidth = 3; ctx.lineCap = 'round';
-    line(-14,-6,-19,-26); line(14,-6,19,-26);
+    line(-14,-6,-19,-26); line(14,-6,19,-26); ctx.lineCap = 'butt';
     rr(-24,-9,48,18,6); ctx.fillStyle = '#16213f'; ctx.fill(); ctx.strokeStyle = `rgba(${C.cyan},.8)`; ctx.lineWidth = 1.5; ctx.stroke();
-    for (let i = 0; i < 4; i++){ ctx.fillStyle = `rgba(${C.cyan},${.4+.6*Math.abs(Math.sin(t*5+i))})`; ctx.beginPath(); ctx.arc(-12+i*8,0,2.2,0,7); ctx.fill(); }
+    for (let i = 0; i < 4; i++){ ctx.fillStyle = `rgba(${C.cyan},${.4+.6*Math.abs(Math.sin(t*5+i))})`; dot(-12+i*8,0,2.2); }
   } else {
     rr(-15,-10,30,20,3); ctx.fillStyle = '#123a5c'; ctx.fill(); ctx.strokeStyle = `rgba(${rgb},.9)`; ctx.lineWidth = 1.5; ctx.stroke();
     ctx.fillStyle = '#0a1626'; ctx.fillRect(-8,-6,11,12); ctx.strokeStyle = 'rgba(200,210,235,.4)'; ctx.lineWidth = 1; ctx.strokeRect(-8,-6,11,12);
     ctx.strokeStyle = 'rgba(220,200,120,.7)';
     for (let i = -12; i <= 12; i += 4){ line(i,-10,i,-13); line(i,10,i,13); }
-    ctx.fillStyle = `rgba(${rgb},${.4+.6*Math.abs(Math.sin(t*(d.type==='rx'?6:4)))})`; ctx.beginPath(); ctx.arc(9,-4,2.4,0,7); ctx.fill();
+    ctx.fillStyle = `rgba(${rgb},${.4+.6*Math.abs(Math.sin(t*(type==='rx'?6:4)))})`; dot(9,-4,2.4);
   }
   ctx.restore();
 }
-function drawPerson(){
-  const fy = FLOORS[state.loc].fy + P.lift, cp = personPoint();
-  const rgb = det.alert ? C.red : (P.phase === 'walk' ? C.green : C.amber);
-  glow(cp.x, cp.y, det.alert ? 80 + 10*Math.sin(state.time*6) : 66, rgb, .32);
-  if (P.phase === 'walk'){ ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(P.x, fy+1, 16, 4, 0, 0, 7); ctx.fill(); }
-  ctx.save(); ctx.translate(P.x, fy); ctx.rotate(P.angle);
-  const sw = P.phase === 'walk' ? Math.sin(P.wp) : 0, f = P.phase === 'walk' ? 0 : 12;
-  ctx.lineCap = 'round'; ctx.strokeStyle = '#eef3ff'; ctx.lineWidth = 6.5;
+function drawCat(p){
+  const f = footPos(p), sw = p.phase === 'walk' ? 3*Math.sin(p.wp*1.6) : 0;
+  ctx.save(); ctx.globalAlpha = p.alpha;
+  glow(f.x, f.y - 12, 30, p.rgb, .18);
+  ctx.translate(f.x, f.y); ctx.scale(p.dir, 1);
+  ctx.fillStyle = `rgb(${p.rgb})`; ctx.strokeStyle = `rgb(${p.rgb})`; ctx.lineCap = 'round';
+  ctx.lineWidth = 2.6; line(-8,-6,-8+sw,0); line(-3,-6,-3-sw,0); line(5,-6,5+sw,0); line(9,-6,9-sw,0);
+  ctx.beginPath(); ctx.moveTo(-12,-11); ctx.quadraticCurveTo(-23,-14,-20,-25); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(0,-10,13,6.5,0,0,7); ctx.fill();
+  dot(13,-16,5.5);
+  ctx.beginPath(); ctx.moveTo(9,-19); ctx.lineTo(10.5,-26); ctx.lineTo(13.5,-21); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(13.5,-21); ctx.lineTo(17,-25.5); ctx.lineTo(17.8,-18); ctx.fill();
+  ctx.restore();
+}
+function drawPerson(p){
+  if (p.gone) return;
+  if (p.pet) return drawCat(p);
+  const f = footPos(p), cp = personPoint(p), col = personCol(p), down = p.phase === 'fall' || p.phase === 'lie';
+  ctx.save(); ctx.globalAlpha = p.alpha;
+  glow(cp.x, cp.y, down ? 70 + 8*Math.sin(state.time*6) : 52, col, down ? .38 : .26);
+  if (!down){ ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(f.x, f.y+1, 15, 4, 0, 0, 7); ctx.fill(); }
+  ctx.translate(f.x, f.y + p.lift); ctx.rotate(p.angle);
+  const sw = p.phase === 'walk' ? Math.sin(p.wp) : 0, arms = down ? 12 : 0;
+  ctx.lineCap = 'round'; ctx.strokeStyle = `rgb(${p.rgb})`; ctx.lineWidth = 6.5;
   line(0,-26, 11*sw,0); line(0,-26,-11*sw,0);
   line(0,-28,0,-54);
-  line(0,-50,-10*sw-f,-32); line(0,-50,10*sw+f,-32);
-  ctx.fillStyle = '#eef3ff'; ctx.beginPath(); ctx.arc(0,-66,9.5,0,7); ctx.fill();
+  line(0,-50,-10*sw-arms,-32); line(0,-50,10*sw+arms,-32);
+  ctx.fillStyle = `rgb(${p.rgb})`; dot(0,-66,9.5);
+  if (p.intruder){ ctx.fillStyle = '#1a1424'; ctx.fillRect(-9,-70,18,6); }
   ctx.restore();
 }
 function drawLabels(){
-  ctx.font = `700 ${FS*.78}px Inter,system-ui,sans-serif`; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillStyle = 'rgba(180,195,230,.55)';
-  [['BEDROOM · 1ST FLOOR',114,192],['BATHROOM',636,192],['LIVING ROOM · GROUND',114,412],['KITCHEN',576,412]]
-    .forEach(([s,x,y]) => ctx.fillText(s,x,y));
-  Object.values(DEV).forEach(d => { if (active(d)) pill(d.label, d.x, d.y + d.ly, d.type === 'rx' ? C.green : C.cyan); });
-  pill('Concrete floor: blocks Wi-Fi', 770, 390, '200,208,228', 'rgba(200,208,228,.35)', .85);
-  if (!covered()){
-    const pp = personPoint();
-    pill('✕ Signal blocked', pp.x + 10, 392, C.red, 'rgba(255,93,108,.6)', .9);
-  }
+  const tx = SETUPS[state.setup].tx;
+  tx.forEach(k => pill(TX[k].label, TX[k].x, TX[k].y + (k === 'router' ? -36 : -24), C.cyan));
+  if (!(state.setup === 'C' && S < .6)) rxs.forEach(rx => pill(rx.label, rx.x, rx.y - 24, '75,240,166', 'rgba(75,240,166,.35)', state.setup === 'C' ? .85 : 1));
+  if (state.setup === 'A') pill('Concrete floor: blocks Wi-Fi', 560, 390, '200,208,228', 'rgba(200,208,228,.35)', .82);
+  if (blocked.length) pill('✕ Signal blocked', blocked[0].x, 392, C.red, 'rgba(255,93,108,.6)', .85);
+  people.forEach(p => {
+    if (p.gone || p.alpha < .2) return;
+    const f = footPos(p), down = p.phase === 'fall' || p.phase === 'lie';
+    const x = down ? personPoint(p).x : f.x, y = p.pet ? f.y - 44 : down ? f.y - 30 : f.y - 96;
+    pill(p.name, x, y, p.rgb, `rgba(${p.rgb},.45)`, .8);
+  });
 }
 function draw(){
   ctx.setTransform(DPR*S,0,0,DPR*S,0,0);
   const t = state.time;
-  drawSky(t); drawHouseBody(); drawWaves(); drawStructure(); drawPaths();
-  Object.values(DEV).forEach(d => drawDevice(d, !active(d)));
-  drawPerson(); drawLabels();
-  charts.forEach((c,i) => drawChart(c, i));
+  drawSky(t); drawHouseBody(t); drawWaves(); drawStructure(t); drawPaths();
+  const tx = SETUPS[state.setup].tx;
+  tx.forEach(k => drawDevice(TX[k], k === 'router' ? 'router' : 'tx'));
+  if (state.setup === 'A'){ drawDevice(TX.s1, 'tx', true); drawDevice({ x:650, y:300 }, 'rx', true); }
+  rxs.forEach(rx => drawDevice(rx, 'rx'));
+  people.forEach(drawPerson);
+  drawLabels();
 }
-function drawChart(c, i){
-  const g = c.el.getContext('2d'), w = c.el.width, h = c.el.height;
-  if (!w || !h) return;
+
+/* ---------- side panel ---------- */
+function buildRxs(){
+  rxs = SETUPS[state.setup].rx.map(d => ({ ...d, buf:Array.from({length:130}, () => (Math.random()-.5)*3.2), ai:{ state:'still', g:0, long:0, fall:null } }));
+  $('rows').innerHTML = rxs.map((rx,i) =>
+    `<div class="row"><div class="row-head"><span>📡 ${rx.name}</span><span class="rt"><span class="tag" id="rt${i}"></span><span class="real" id="rr${i}"></span></span></div><canvas class="spark" id="sp${i}"></canvas><div class="who" id="rw${i}"></div></div>`).join('');
+  rxs.forEach((rx,i) => { rx.el = $('sp'+i); rx.tagEl = $('rt'+i); rx.realEl = $('rr'+i); rx.whoEl = $('rw'+i); });
+  sizeSparks();
+}
+function drawSpark(rx){
+  const el = rx.el; if (!el) return;
+  const g = el.getContext('2d'), w = el.width, h = el.height; if (!w || !h) return;
   g.clearRect(0,0,w,h);
-  g.strokeStyle = 'rgba(140,170,255,.10)'; g.lineWidth = DPR;
-  [.25,.5,.75].forEach(f => { g.beginPath(); g.moveTo(0,h*f); g.lineTo(w,h*f); g.stroke(); });
-  const rx = RX[i], on = active(DEV[rx.key]);
-  if (!on){
-    g.fillStyle = 'rgba(147,160,191,.85)'; g.font = `${12*DPR}px system-ui,sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.fillText('No receiver on this floor', w/2, h/2); return;
-  }
-  const hot = rx.floor === state.loc && (P.phase === 'fall' || (P.phase === 'lie' && state.time - P.lieT < .4));
-  const alert = det.alert && rx.floor === state.loc;
+  g.strokeStyle = 'rgba(140,170,255,.10)'; g.lineWidth = DPR; g.beginPath(); g.moveTo(0,h/2); g.lineTo(w,h/2); g.stroke();
+  const st = rx.ai.state, bad = st === 'fall', hot = st === 'checking' || st === 'possible';
   const grad = g.createLinearGradient(0,0,w,0);
-  if (hot || alert){ grad.addColorStop(0,'#ffc04d'); grad.addColorStop(1,'#ff5d6c'); }
+  if (bad){ grad.addColorStop(0,'#ff8a5c'); grad.addColorStop(1,'#ff5d6c'); }
+  else if (hot){ grad.addColorStop(0,'#ffc04d'); grad.addColorStop(1,'#ff8a5c'); }
   else { grad.addColorStop(0,'#4fd8ff'); grad.addColorStop(1,'#a98bff'); }
-  g.save(); g.shadowColor = hot || alert ? 'rgba(255,93,108,.8)' : 'rgba(79,216,255,.7)'; g.shadowBlur = 8*DPR;
-  g.strokeStyle = grad; g.lineWidth = 2*DPR; g.lineJoin = 'round'; g.beginPath();
-  c.data.forEach((v,j) => { const x = j/(N-1)*w, y = h/2 - Math.max(-60,Math.min(60,v))/60*(h/2-4*DPR); j ? g.lineTo(x,y) : g.moveTo(x,y); });
+  g.save(); g.globalAlpha = st === 'still' ? .6 : 1;
+  g.shadowColor = bad || hot ? 'rgba(255,93,108,.8)' : 'rgba(79,216,255,.7)'; g.shadowBlur = 6*DPR;
+  g.strokeStyle = grad; g.lineWidth = 1.6*DPR; g.lineJoin = 'round'; g.beginPath();
+  const b = rx.buf, n = b.length, off = NB - n;
+  for (let j = 0; j < n; j++){
+    const x = (j+off)/(NB-1)*w, y = h/2 - Math.max(-75, Math.min(75, b[j]))/75*(h/2 - 3*DPR);
+    j ? g.lineTo(x,y) : g.moveTo(x,y);
+  }
   g.stroke(); g.restore();
 }
-
-/* ---------- UI ---------- */
+function rowTag(rx){
+  const a = rx.ai;
+  if (a.state === 'checking') return ['⏳ checking…','a'];
+  if (a.state === 'fall') return ['🚨 fall!','r'];
+  if (a.state === 'possible') return ['❓ fall? others moving','a'];
+  if (know('rooms')){
+    const n = guessOf(rx);
+    if (n) return [`👥 ${n} here`,'c'];
+    return a.state === 'moving' && know('pets') ? ['🐈 pet: ignored',''] : ['empty',''];
+  }
+  if (a.state === 'moving'){ const g = guessOf(rx); return g ? [`🚶 ~${g}${g >= 3 ? '+' : ''} moving`,'c'] : ['〰 faint movement','']; }
+  return ['still',''];
+}
+const OFF = { Ajji:0, Ajja:-3, Anu:2 };
+function whoLine(rx){
+  const ps = peopleIn(rx);
+  if (!know('walk')) return rx.ai.state === 'moving' && ps.some(p => !p.pet) ? "Who? <i>can't tell yet (walking styles not learned)</i>" : '';
+  const n = ps.filter(p => !p.pet && p.phase === 'walk').length;
+  return ps.map(p => {
+    if (p.pet) return '🐈 pet';
+    if (p.intruder) return '<b style="color:var(--red)">⚠️ stranger</b>';
+    const tag = p.phase === 'walk' ? `${[93,81,69][Math.max(0, n-1)] + (OFF[p.name] || 0)}% sure` : p.phase === 'pause' ? 'still' : 'fallen';
+    return `<b style="color:rgb(${p.rgb})">${p.name}</b> ${tag}`;
+  }).join(' · ');
+}
+function headline(){
+  if (state.scen === 'guard' && guard){
+    if (guard.real || guard.petAlarm) return [guard.real && know('walk') ? '🚨 Stranger inside!' : '🚨 Someone is inside!', `Movement: ${guard.rx.name}. Nobody should be home.`, 'r'];
+    if (!guard.armed) return ['🔒 Locking up…', 'Everyone is leaving the house.', ''];
+    if (know('pets') && rxs.some(r => r.ai.state === 'moving')) return ['🌙 Home empty · watching', '🐈 Only the cat is moving. Ignored.', ''];
+    return ['🌙 Home empty · watching', 'The signal is calm. Any person moving will raise an alarm.', ''];
+  }
+  const f = rxs.find(r => r.ai.state === 'fall');
+  if (f) return ['🚨 FALL DETECTED', `${know('walk') && f.ai.fall ? f.ai.fall.p.name + ' · ' : ''}${where(f)}. Family alerted.`, 'r'];
+  const pz = rxs.find(r => r.ai.state === 'possible'); if (pz) return ['❓ Possible fall', `${where(pz)}. Others moving nearby, so it can't confirm.`, 'a'];
+  if (rxs.some(r => r.ai.state === 'checking')) return ['⏳ Sudden big change!', 'Checking if the person stays still…', 'a'];
+  if (state.missed) return ['❌ Fall missed', 'No receiver could feel it.', 'a'];
+  const mv = rxs.filter(r => r.ai.state === 'moving').map(r => r.name);
+  return mv.length ? ['🏠 Normal activity', 'Movement felt in: ' + mv.join(', '), ''] : ['😴 All calm', 'No movement right now.', ''];
+}
 function caption(){
-  if (state.mode === 'A' && state.loc === 1) return '⚠️ Only one router, downstairs. The concrete floor blocks most Wi-Fi waves, so the receiver can\'t "see" the person upstairs. Press <b>Simulate a fall</b> to see what happens.';
-  if (state.mode === 'A') return '✅ The router and receiver are in the same room, so every movement shows up clearly in the signal. Next, try <b>Bedroom (1st floor)</b>.';
-  return '✅ Each floor has its own ESP32 sender and receiver, so the whole house is covered. Try a fall on either floor!';
+  if (state.L > 0 && state.L < 1) return '🧠 <b>Learning…</b> In real life this takes weeks. Every day it records normal movement in your home and retrains its own model at night. Nobody has to label anything.';
+  const walk = know('walk'), pets = know('pets'), go = ' 👉 Switch <b>AI memory</b> to <b>🧠 After 1 month</b> and watch again.';
+  if (state.scen === 'guard'){
+    if (!guard || !guard.armed) return '🌙 <b>Night guard:</b> the family leaves and locks up. Only the cat stays home…';
+    if (guard.real) return walk ? '🚨 A stranger walked in. The learned AI knows every family member\'s walking style, and this one matches nobody. One true alarm, and no false ones.'
+      : guard.petAlarm ? '🚨 Now a real intruder walked in. But the AI already gave a false alarm for the cat, so will the family trust this one?' + go
+      : '🚨 An intruder walked in. Any movement means someone is inside, even in the dark and with no camera.';
+    if (guard.petAlarm) return '❗ <b>False alarm!</b> It was only the cat. A Day-1 AI raises the alarm for any movement. Keep watching: a real intruder is coming next…';
+    return pets ? '🔒 The house is empty. The cat walks around, but the learned AI knows its small, low movement and ignores it. Watch the front door on the left…'
+      : '🔒 The house is empty, and only the cat is home. Watch what the Day-1 AI does when the cat walks…';
+  }
+  if (state.scen === 'swap' && swapInfo){
+    const { a, b } = swapInfo;
+    if (!swapInfo.done) return `↕ <b>${a.name}</b> goes down while <b>${b.name}</b> goes up, at the same time. Watch the rows on the right: the movement slides from floor to floor${walk ? ', and the names follow them' : ''}.`;
+    return walk ? `✅ The learned AI knows <b>${a.name}</b> went down and <b>${b.name}</b> went up. It matched their walking styles as they crossed. Its confidence dips while they are close together.`
+      : 'Done. The Day-1 AI only feels "one person moving on each floor", which looks the same as both turning back. It feels movement, not faces.' + go;
+  }
+  const tip = ' 👆 <b>Tap a person</b> to make them fall.', extra = walk ? ' 🧠 It now names each person and counts people standing still.' : '';
+  if (state.setup === 'A') return 'One router and one receiver, both downstairs. The concrete floor blocks most Wi-Fi, so people upstairs are almost invisible, and no amount of learning fixes that.' + extra + tip;
+  if (state.setup === 'B') return 'One receiver per floor. The AI knows <b>which floor</b> has movement, but not which room.' + extra + tip;
+  return 'A receiver in every room and on the stairs. The AI knows <b>which room</b> has movement.' + extra + tip;
 }
-function tags(){
-  RX.forEach((rx,i) => {
-    const el = $('tag'+i);
-    if (!active(DEV[rx.key])){ el.textContent = 'not installed'; el.className = 'tag'; }
-    else if (rx.floor === state.loc){ el.textContent = '👤 person in range'; el.className = 'tag g'; }
-    else { el.textContent = 'no one in range'; el.className = 'tag'; }
+function buildBars(){
+  $('bars').innerHTML = LEARN.map((l,i) => `<div class="bar" id="bar${i}"><div class="bar-h"><span>${l.icon} ${l.name}</span><span id="bv${i}"></span></div><div class="bar-t"><div class="bar-f" id="bf${i}"></div></div><div class="bar-u" id="bu${i}"></div></div>`).join('');
+}
+function memUI(){
+  const d = dayNow();
+  setTxt($('memDay'), `Day ${d}`);
+  setTxt($('memTag'), state.L <= 0 ? 'just installed' : state.L < 1 ? 'learning…' : 'learned ✓');
+  setCls($('memTag'), 'tag' + (state.L >= 1 ? ' c' : state.L > 0 ? ' a' : ''));
+  LEARN.forEach((l,i) => {
+    const f = Math.min(1, (d - 1)/(l.days - 1)), done = d >= l.days, w = Math.round(f*100) + '%', el = $('bf'+i);
+    if (el.style.width !== w) el.style.width = w;
+    setTxt($('bv'+i), done ? `✓ by day ${l.days}` : w);
+    setCls($('bar'+i), 'bar' + (done ? ' done' : ''));
+    setTxt($('bu'+i), (done ? '✓ Unlocked: ' : '🔒 Unlocks: ') + l.gives);
   });
+  setTxt($('lessons'), String(state.lessons));
 }
-function reset(){
-  P.phase = 'walk'; P.angle = 0; P.lift = 0; P.x = RANGE[state.loc][0] + 20; P.dir = 1;
-  det.alert = det.missed = false;
-  $('alertCard').classList.remove('show'); $('missCard').classList.remove('show');
-  $('caption').innerHTML = caption(); tags(); refreshButtons();
+function setTxt(el, v, html){ if (el._v === v) return; el._v = v; if (html) el.innerHTML = v; else el.textContent = v; }
+function setCls(el, c){ if (el.className !== c) el.className = c; }
+function ui(){
+  rxs.forEach(rx => {
+    const [txt, cls] = rowTag(rx); setTxt(rx.tagEl, txt); setCls(rx.tagEl, 'tag ' + cls);
+    const ps = peopleIn(rx), pets = ps.filter(p => p.pet).length;
+    setTxt(rx.realEl, `really: ${ps.length - pets}${pets ? ' +🐈' : ''}`);
+    setTxt(rx.whoEl, whoLine(rx), true);
+    drawSpark(rx);
+  });
+  const [lab, sub, k] = headline();
+  setTxt($('aiLabel'), lab); setTxt($('aiSub'), sub); setCls($('aiLabel'), 'ai-label' + (k ? ' k-' + k : ''));
+  const g = rxs.reduce((s,r) => s + guessOf(r), 0), learned = know('rooms');
+  setTxt($('gAI'), g ? (learned ? String(g) : '~' + g) : '0');
+  setTxt($('gAISub'), learned ? 'people at home' : 'people moving');
+  const home = people.filter(p => !p.gone && p.alpha > .5 && !p.pet);
+  const walking = home.filter(p => p.phase === 'walk').length, still = home.filter(p => p.phase === 'pause').length, fallen = home.filter(p => p.phase === 'fall' || p.phase === 'lie').length;
+  setTxt($('gReal'), String(home.length));
+  setTxt($('gRealSub'), [walking && `${walking} walking`, still && `${still} still`, fallen && `${fallen} fallen`].filter(Boolean).join(' · ') || 'nobody');
+  const alert = rxs.some(r => r.ai.state === 'fall' || r.ai.state === 'possible') || !!(guard && (guard.real || guard.petAlarm));
+  const hot = rxs.some(r => r.ai.state === 'checking' || r.ai.state === 'moving');
+  [...$('steps').children].forEach((el,i) => setCls(el, i < 2 ? 'on' : i === 2 ? ('on' + (hot ? ' hot' : '')) : (alert ? 'alert' : '')));
+  setTxt($('caption'), caption(), true);
+  $('fallBtn').disabled = state.scen === 'guard' || !people.some(eligible);
+  memUI();
 }
-function refreshButtons(){
-  document.querySelectorAll('#modeSeg button').forEach(b => { const on = b.dataset.mode === state.mode; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
-  document.querySelectorAll('#locSeg button').forEach(b => { const on = +b.dataset.loc === state.loc; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
-  $('fallBtn').disabled = P.phase !== 'walk';
+function showToast(kind, title, body, actions){
+  $('toast').className = 'toast show ' + kind; $('tTitle').innerHTML = title; $('tBody').innerHTML = body;
+  const box = $('tActions'); box.innerHTML = '';
+  actions.forEach(a => { const b = document.createElement('button'); b.textContent = a.label; b.className = a.cls; b.onclick = () => a.fn(b); box.appendChild(b); });
 }
-document.querySelectorAll('#modeSeg button').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; reset(); });
-document.querySelectorAll('#locSeg button').forEach(b => b.onclick = () => { state.loc = +b.dataset.loc; reset(); });
-document.querySelectorAll('[data-reset]').forEach(b => b.onclick = reset);
-$('fixBtn').onclick = () => { state.mode = 'B'; reset(); };
-$('fallBtn').onclick = () => { if (P.phase !== 'walk') return; P.phase = 'fall'; P.t0 = state.time; refreshButtons(); };
+function hideToast(){ $('toast').className = 'toast'; }
 
-resize(); reset();
-let last = performance.now();
+/* ---------- controls ---------- */
+function refreshButtons(){
+  [['setupSeg', state.setup], ['countSeg', String(state.count)], ['scenSeg', state.scen], ['memSeg', String(state.learnTo)]].forEach(([id, v]) =>
+    document.querySelectorAll(`#${id} button`).forEach(b => { const on = b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }));
+}
+function setScenario(v){
+  if (v === 'swap' && state.count < 2) state.count = 2;
+  state.scen = v; guard = null; swapInfo = null;
+  clearAlerts(); buildPeople();
+  if (v === 'swap') startSwap(); else if (v === 'guard') startGuard();
+  refreshButtons();
+}
+function setSetup(v){ state.setup = v; buildRxs(); setScenario(state.scen); }
+function setCount(n){ state.count = n; setScenario(state.scen === 'swap' && n < 2 ? 'normal' : state.scen); }
+document.querySelectorAll('#setupSeg button').forEach(b => b.onclick = () => setSetup(b.dataset.v));
+document.querySelectorAll('#countSeg button').forEach(b => b.onclick = () => setCount(+b.dataset.v));
+document.querySelectorAll('#scenSeg button').forEach(b => b.onclick = () => setScenario(b.dataset.v));
+document.querySelectorAll('#memSeg button').forEach(b => b.onclick = () => {
+  state.learnTo = +b.dataset.v; if (!state.learnTo) state.L = 0;
+  setScenario(state.scen);
+});
+$('resetBtn').onclick = () => setScenario(state.scen);
+$('fallBtn').onclick = () => {
+  const c = people.filter(p => eligible(p) && p.loc.kind === 'floor');
+  if (c.length) doFall(c[Math.floor(Math.random()*c.length)]);
+};
+function hit(e){
+  const r = cv.getBoundingClientRect(), x = (e.clientX - r.left)/r.width*W, y = (e.clientY - r.top)/r.height*H;
+  let best = null, bd = 1e9;
+  people.forEach(p => { if (!eligible(p)) return; const q = personPoint(p), d = Math.hypot(q.x - x, q.y - y); if (d < bd){ bd = d; best = p; } });
+  return bd < 60 && state.scen !== 'guard' ? best : null;
+}
+cv.addEventListener('click', e => { const p = hit(e); if (p) doFall(p); });
+cv.addEventListener('mousemove', e => { cv.style.cursor = hit(e) ? 'pointer' : 'default'; });
+
+buildBars(); buildRxs(); setScenario('normal'); resize();
+window.__sim = { state, step:s => { for (let i = 0; i < s/DT; i++) step(); }, doFall, setSetup, setScenario, setCount,
+  get people(){ return people; }, get rxs(){ return rxs; }, get falls(){ return falls; }, get guard(){ return guard; }, get swap(){ return swapInfo; } };
+
+let last = performance.now(), acc = 0;
 function frame(now){
-  const dt = Math.min(.05, (now-last)/1000); last = now;
-  update(dt); draw();
+  acc += Math.min(.1, (now - last)/1000); last = now;
+  while (acc >= DT){ step(); acc -= DT; }
+  draw(); ui();
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

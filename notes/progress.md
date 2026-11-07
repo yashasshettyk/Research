@@ -22,3 +22,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-07: Explainer on Wi-Fi fall detection made; she is exploring idea #4.
 - 2026-11-07: Hardware/components for Wi-Fi fall detection noted (notes/ideas/wifi-fall-hardware.md).
 - 2026-11-07: Made animated house simulation (explainers/wifi-house-simulation.html). Next: literature search if she wants.
+- 2026-11-07: Sim upgraded: 1–3 people, stairs, swap floors, night guard, Day 1 vs learned AI memory, fixed a false-alarm bug. Phase: design discussion (no implementation yet).

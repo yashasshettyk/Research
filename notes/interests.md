@@ -4,6 +4,8 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 
 | Date | Topic / Decision | Notes |
 |---|---|---|
+| 2026-11-07 | Decision: keep discussing the design until confident; no implementation yet | Sim is the discussion tool |
+| 2026-11-07 | Wants near-100% accuracy and a self-learning model that adapts to the home | Framed as: learns by itself + safety net ("Are you OK?" then call family) |
 | 2026-11-07 | Interested in Wi-Fi intrusion (robbery) detection at night or when nobody is home | Suggested: keep fall alert as the main topic and add intrusion as a second mode (a "home guardian") |
 | 2026-11-07 | Interested in Wi-Fi fall detection for elders (idea #4) | Asked how it works; explainer made |
 | 2026-11-07 | Wants topics that help common people in daily life | Key criterion for choosing topic |
