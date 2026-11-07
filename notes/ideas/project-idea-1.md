@@ -17,3 +17,11 @@ Kannada that can run on limited hardware.
 **Why it suits M.Tech:** real social problem, clear gap (low-resource language), doable in ~1 year, publishable.
 
 Status: suggested 2026-11-07, assumes CSE/IT branch — not yet confirmed by Shravya.
+
+## Long-term research path (added 2026-11-07)
+Branch confirmed: CSE. Shravya wants a topic she can continue into PhD/higher research.
+Broad research area: **Trustworthy AI for low-resource Indian languages (misinformation)**
+- M.Tech: Kannada text fake-news detection with lightweight multilingual models.
+- Next step 1: Explainable detection — show *why* a post is flagged.
+- Next step 2: Multimodal — fake news in images/memes/videos with Kannada text.
+- Next step 3: Detecting AI (LLM)-generated fake news across many Indian languages.
