@@ -17,3 +17,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-07: 8 topic options listed (notes/ideas/topic-options.md); awaiting her pick.
 - 2026-11-07: Round-2 list of 20 topics (notes/ideas/topic-options-2.md); awaiting pick.
 - 2026-11-07: Set 2 of 20 topics (notes/ideas/topic-options-2.md); awaiting her pick.
+- 2026-11-07: 20 broader topics listed (notes/ideas/topic-options-2.md); awaiting pick.
