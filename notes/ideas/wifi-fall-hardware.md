@@ -21,3 +21,10 @@ Optional later: ESP32 board with external antenna (e.g. ESP32-WROOM-32U) for a s
 
 ## Setup
 Sender ESP32 sends ~100 small Wi-Fi messages per second → receiver ESP32 records the signal details → sends them to the laptop over USB → Python saves the data and the AI model detects falls.
+
+## Two-floor house with one Wi-Fi router (2026-11-07)
+- Sensing works best in the area between sender and receiver (same room / nearby). Signals pass through walls, but a concrete floor slab weakens them a lot, so detection from downstairs to upstairs is unreliable.
+- Fix: put one receiver ESP32 in each important area (bedroom, bathroom, each floor). The home router can be the sender on its floor (the ESP32 pings the router to keep signals flowing); on the other floor, add one ESP32 as a sender.
+- All boards use the same home Wi-Fi to send alerts to the phone.
+- Two-floor house ≈ 3–4 ESP32 boards ≈ ₹2,000–3,000.
+- Research angle: cover a whole house with the fewest devices, and pass "tracking" smoothly from one room to the next.
