@@ -44,10 +44,20 @@ All papers below were checked via web search or the paper's own page. Results ar
    - ESP32 boards, with a public **UIT-ESP32** dataset. Reported over 99% precision for both the fall and where it happened.
    - https://elib.vku.udn.vn/handle/123456789/6225
 
+## E. Closest competitors to our design (added 2026-11-07)
+10. **S. Ji, Y. Xie, M. Li.** "SiFall: Practical Online Fall Detection with RF Sensing." *ACM SenSys 2022*. DOI 10.1145/3560905.3568517. arXiv:2301.03773.
+    - Learns normal activities and treats a fall as "outside normal" (anomaly detection), with self-supervised incremental learning.
+    - Reported 94.1% of falls detected with only one false alarm over 3 days of live use. It covers falls only: no theft mode and no voice check.
+    - https://arxiv.org/abs/2301.03773
+11. **S. Li, X. Li, K. Niu, H. Wang, Y. Zhang, D. Zhang.** "AR-Alarm: An Adaptive and Robust Intrusion Detection System Leveraging CSI from Commodity Wi-Fi." *ICOST 2017*, LNCS 10461, Springer, pp. 211–223. DOI 10.1007/978-3-319-66188-9_18.
+    - A Wi-Fi intruder detector that needs no calibration and ignores falling objects, curtains and pets.
+    - It covers intruders only: no falls, and it can't tell family from a stranger.
+    - https://shengjieli-pku.github.io/ShengjieLi/Paper/AR-Alarm.pdf
+
 ## Background survey
 - **Y. Ma, G. Zhou, S. Wang.** "WiFi Sensing with Channel State Information: A Survey." *ACM Computing Surveys*, 52(3), 2019/2020. DOI 10.1145/3310194. https://gzhou.pages.wm.edu/wp-content/blogs.dir/5736/files/sites/13/2017/12/WiFiSenseSurvey_CSUR19.pdf
 
 ## Research gap (first look)
 - Many papers make one fixed model work in new rooms (DeFall, XFall, the 2026 preprint).
 - Self-learning exists for general Wi-Fi sensing (AutoFi, continual-learning methods).
-- In this quick search we found **no paper that combines continual self-learning + fall detection + cheap ESP32 + multi-person, multi-floor Indian homes + an "Are you OK?" voice-check safety loop.** That combination is her possible gap. A deeper search is still needed before claiming it.
+- In this quick search we found **no paper that combines continual self-learning + fall detection + cheap ESP32 + multi-person, multi-floor Indian homes + an "Are you OK?" voice-check safety loop.** That combination is her possible gap. Update: SiFall (falls only) and AR-Alarm (intruders only) are the closest. Neither combines both modes. See notes/design/home-guardian-v1.md. A deeper search is still needed before claiming it.
