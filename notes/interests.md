@@ -16,3 +16,4 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 | 2026-11-07 | Considering topic: Kannada fake-news detection | Suggested idea, not yet confirmed |
 | 2026-11-07 | Asked for ideas that solve community problems | Likes social-impact projects; see topic-options-4-community.md |
 | 2026-11-07 | Wants ideas not discovered yet, interesting + helpful | Prefers novel, life-saving ideas; show lists in chat (can't open .md) |
+| 2026-11-07 | Reaffirmed Wi-Fi fall alert as main interest | School-van alert = possible extra use of same tech |
