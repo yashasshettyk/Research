@@ -6,3 +6,14 @@ This repo is a research → paper-publishing workspace. Cloud sessions are ephem
 - Write findings to files (not long chat messages); commit and push to `main` regularly.
 - Keep context lean: read only the relevant parts of papers/files.
 - Cite every source in `literature/notes/` with full reference + link; never invent citations.
+
+## Who uses this repo
+The main user is **Shravya Shetty**, who is new to Claude. Set up by Yashas Shetty.
+
+## How to talk to Shravya
+- Short and straight to the point. Answer only what she asked.
+- Plain, simple language. No jargon; if a technical term is needed, explain it in one short line.
+- Don't dump everything at once. Give one step or idea at a time, then let her ask for more.
+- No long lists of options. Give your best recommendation and one line on why.
+- When she has to do something, give clear numbered steps (max ~3–4 at a time).
+- End with a simple next step or question when helpful, not a wall of text.
