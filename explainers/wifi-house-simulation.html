@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wi-Fi Home Simulator</title>
+<style>
+:root{
+  --bg:#060914; --panel:rgba(20,28,52,.62); --border:rgba(140,170,255,.16);
+  --ink:#eaf0ff; --muted:#93a0bf;
+  --cyan:#4fd8ff; --green:#4bf0a6; --violet:#a98bff; --red:#ff5d6c; --amber:#ffc04d;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:
+    radial-gradient(1100px 560px at 15% -10%, #16224a 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #2a1a4a 0%, transparent 55%),
+    var(--bg);
+  min-height:100vh;
+}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.55rem;margin:0;letter-spacing:-.01em}
+h1 span{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin:4px 0 16px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px}
+@media (max-width:920px){.grid{grid-template-columns:minmax(0,1fr)}}
+.glass{background:var(--panel);border:1px solid var(--border);border-radius:18px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05)}
+.stage{overflow:hidden}
+.canvas-wrap{position:relative}
+#scene{display:block;width:100%;aspect-ratio:1000/660;height:auto}
+.caption{padding:12px 16px;border-top:1px solid var(--border);color:#cfd8ef;min-height:48px}
+.controls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;padding:14px 16px 16px;border-top:1px solid var(--border)}
+.ctl label{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 5px 2px}
+.seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:3px;gap:2px}
+.seg button{background:transparent;border:0;color:var(--muted);padding:8px 12px;border-radius:9px;font:inherit;font-size:.9rem;cursor:pointer;transition:.2s}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:linear-gradient(135deg,rgba(79,216,255,.22),rgba(169,139,255,.22));color:var(--ink);box-shadow:inset 0 0 0 1px rgba(140,170,255,.35)}
+.actions{display:flex;gap:8px;margin-left:auto}
+.btn{border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;transition:.2s}
+.btn-fall{background:linear-gradient(135deg,#ff5d6c,#ff8a5c);color:#fff;box-shadow:0 8px 24px rgba(255,93,108,.35)}
+.btn-fall:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--ink);box-shadow:inset 0 0 0 1px var(--border)}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+@media (max-width:560px){
+  .ctl{width:100%}
+  .seg{display:flex;width:100%}
+  .seg button{flex:1;white-space:normal;padding:8px 6px;font-size:.85rem}
+  .actions{width:100%;margin-left:0}
+  .actions .btn{flex:1}
+}
+/* side panel */
+.side{display:flex;flex-direction:column;gap:16px}
+.card{padding:16px}
+.card h3{margin:0 0 10px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.chart-box{margin-bottom:12px}
+.chart-box:last-child{margin-bottom:0}
+.chart-head{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;margin-bottom:4px;gap:8px}
+.tag{font-size:.72rem;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.06);color:var(--muted);white-space:nowrap}
+.tag.g{color:var(--green);background:rgba(75,240,166,.12)}
+canvas.chart{display:block;width:100%;height:84px;border-radius:10px;background:rgba(4,8,20,.55);box-shadow:inset 0 0 0 1px var(--border)}
+.ai-label{font-size:1.25rem;font-weight:700;margin:2px 0}
+.ai-sub{color:var(--muted);font-size:.88rem;min-height:1.3em}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.07);margin:10px 0 4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .3s, background .3s}
+.conf{font-size:.75rem;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px}
+.steps div{text-align:center;font-size:.72rem;padding:7px 2px;border-radius:9px;background:rgba(255,255,255,.04);color:var(--muted);box-shadow:inset 0 0 0 1px var(--border);transition:.3s}
+.steps div.on{color:var(--ink);background:rgba(79,216,255,.12);box-shadow:inset 0 0 0 1px rgba(79,216,255,.4)}
+.steps div.hot{animation:pulse 1s infinite}
+.steps div.alert{color:#fff;background:rgba(255,93,108,.35);box-shadow:inset 0 0 0 1px var(--red)}
+@keyframes pulse{50%{box-shadow:inset 0 0 0 1px rgba(79,216,255,.9),0 0 14px rgba(79,216,255,.4)}}
+.legend{display:grid;gap:7px;font-size:.86rem}
+.legend span{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+/* overlays */
+.toast{position:absolute;top:14px;right:14px;width:260px;max-width:calc(100% - 28px);padding:14px;border-radius:18px;
+  background:rgba(16,20,38,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 18px 50px rgba(0,0,0,.55);transform:translateY(-20px) scale(.96);opacity:0;pointer-events:none;transition:.45s cubic-bezier(.2,.9,.3,1.2)}
+.toast.show{transform:none;opacity:1;pointer-events:auto}
+.toast.red{border:1px solid rgba(255,93,108,.6);box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 30px rgba(255,93,108,.25)}
+.toast.amber{border:1px solid rgba(255,192,77,.6)}
+.t-head{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:6px}
+.t-title{font-weight:700;font-size:1.05rem}
+.t-body{font-size:.86rem;color:#cfd8ef;margin:4px 0 10px}
+.t-actions{display:flex;gap:6px}
+.t-actions button{flex:1;border:0;border-radius:10px;padding:8px;font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+.t-call{background:var(--red);color:#fff}
+.t-amber{background:var(--amber);color:#1a1300}
+.t-ok{background:rgba(255,255,255,.1);color:var(--ink)}
+@media (max-width:560px){.toast{width:210px;padding:10px;top:8px;right:8px}.t-body{margin:2px 0 6px}}
+.foot{color:var(--muted);font-size:.82rem;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📶 Wi-Fi Fall Alert · <span>Live House Simulation</span></h1>
+  <p class="sub">Watch Wi-Fi waves fill a two-floor home, bounce off a person, and see how a fall is caught (or missed).</p>
+
+  <div class="grid">
+    <section class="glass stage">
+      <div class="canvas-wrap">
+        <canvas id="scene" aria-label="Animated two-floor house with Wi-Fi waves"></canvas>
+
+        <div class="toast red" id="alertCard" role="alert">
+          <div class="t-head"><span>🏠 HomeCare</span><span>now</span></div>
+          <div class="t-title">🚨 Fall detected</div>
+          <div class="t-body" id="alertBody">Bedroom · First floor<br>No movement for 2 seconds</div>
+          <div class="t-actions"><button class="t-call">📞 Call</button><button class="t-ok" data-reset>I'm OK</button></div>
+        </div>
+
+        <div class="toast amber" id="missCard" role="alert">
+          <div class="t-head"><span>🏠 HomeCare</span><span>now</span></div>
+          <div class="t-title">❌ Fall missed</div>
+          <div class="t-body">The concrete floor blocked the Wi-Fi signal, so the receiver downstairs couldn't see it.</div>
+          <div class="t-actions"><button class="t-amber" id="fixBtn">Add ESP32 boards upstairs</button></div>
+        </div>
+      </div>
+
+      <div class="caption" id="caption"></div>
+
+      <div class="controls">
+        <div class="ctl">
+          <label>Setup</label>
+          <div class="seg" id="modeSeg">
+            <button data-mode="A" class="on">One router only</button>
+            <button data-mode="B">Router + ESP32 boards</button>
+          </div>
+        </div>
+        <div class="ctl">
+          <label>Person is in</label>
+          <div class="seg" id="locSeg">
+            <button data-loc="0" class="on">Living room (ground)</button>
+            <button data-loc="1">Bedroom (1st floor)</button>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-fall" id="fallBtn">⚠️ Simulate a fall</button>
+          <button class="btn btn-ghost" data-reset>↺ Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <div class="glass card">
+        <h3>Live Wi-Fi signal</h3>
+        <div class="chart-box">
+          <div class="chart-head"><span>📡 Ground floor receiver</span><span class="tag" id="tag0"></span></div>
+          <canvas class="chart" id="c0"></canvas>
+        </div>
+        <div class="chart-box">
+          <div class="chart-head"><span>📡 First floor receiver</span><span class="tag" id="tag1"></span></div>
+          <canvas class="chart" id="c1"></canvas>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <h3>AI brain</h3>
+        <div class="ai-label" id="aiLabel">🚶 Walking</div>
+        <div class="ai-sub" id="aiSub"></div>
+        <div class="bar"><i id="aiBar"></i></div>
+        <div class="conf" id="aiConf"></div>
+        <div class="steps" id="steps">
+          <div>1 Sense</div><div>2 Clean</div><div>3 AI decides</div><div>4 Alert</div>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <h3>What you're seeing</h3>
+        <div class="legend">
+          <div><span style="background:var(--cyan)"></span>Wi-Fi waves &amp; direct path</div>
+          <div><span style="background:var(--green)"></span>Path bouncing off the person (this changes when they move)</div>
+          <div><span style="background:var(--violet)"></span>Path bouncing off the ceiling</div>
+          <div><span style="background:#7d8597;border-radius:2px"></span>Concrete floor: blocks most Wi-Fi</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+  <p class="foot">Simplified simulation for learning. Real systems record “Channel State Information” (fine signal details) with ESP32 boards and use a trained AI model.</p>
+</div>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const cv = $('scene'), ctx = cv.getContext('2d');
+const W = 1000, H = 660;
+let S = 1, DPR = 1, FS = 12;
+
+const C = { cyan:'79,216,255', green:'75,240,166', violet:'169,139,255', red:'255,93,108', amber:'255,192,77' };
+const HOUSE = { x:100, y:180, w:800, h:420 };
+const FLOORS = [
+  { x:100, y:400, w:800, h:200, fy:600, ceil:400 },   // ground
+  { x:100, y:180, w:800, h:200, fy:380, ceil:180 }    // first
+];
+const RANGE = [[240,420],[200,380]];
+const DEV = {
+  router:{ x:152, y:546, floor:0, type:'router', label:'Wi-Fi router · sender', ly:-34 },
+  r0:{ x:532, y:518, floor:0, type:'rx', label:'ESP32 · receiver', ly:-24 },
+  s1:{ x:136, y:300, floor:1, type:'tx', label:'ESP32 · sender', ly:-24, b:true },
+  r1:{ x:592, y:290, floor:1, type:'rx', label:'ESP32 · receiver', ly:-24, b:true }
+};
+const LINKS = [['router','r0',0],['s1','r1',1]];
+const RX = [{ key:'r0', floor:0 }, { key:'r1', floor:1 }];
+
+const state = { mode:'A', loc:0, time:0 };
+const P = { x:260, dir:1, phase:'walk', t0:0, lieT:0, angle:0, lift:0, wp:0 };
+const det = { alert:false, missed:false };
+const rings = { router:[], s1:[] }, ringT = { router:0, s1:.3 };
+const N = 240;
+const charts = [0,1].map(i => ({ el:$('c'+i), data:new Array(N).fill(0) }));
+let sampleAcc = 0;
+
+// stars (seeded)
+let seed = 7; const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+const stars = Array.from({length:90}, () => ({ x:rnd()*W, y:rnd()*175, r:rnd()*1.3+.3, p:rnd()*6 }));
+
+const active = d => !d.b || state.mode === 'B';
+const covered = () => state.mode === 'B' || state.loc === 0;
+
+function resize(){
+  const w = cv.clientWidth || 800;
+  DPR = Math.min(window.devicePixelRatio || 1, 2); S = w / W;
+  cv.width = Math.round(w*DPR); cv.height = Math.round(w*H/W*DPR);
+  FS = Math.min(26, Math.max(12, 10.5/S));
+  charts.forEach(c => { c.el.width = Math.round(c.el.clientWidth*DPR); c.el.height = Math.round(c.el.clientHeight*DPR); });
+}
+window.addEventListener('resize', resize);
+
+/* ---------- helpers ---------- */
+function rr(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
+function glow(x,y,r,rgb,a){ const g = ctx.createRadialGradient(x,y,0,x,y,r); g.addColorStop(0,`rgba(${rgb},${a})`); g.addColorStop(1,`rgba(${rgb},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill(); }
+function pill(text,x,y,rgb='234,240,255',border='rgba(140,170,255,.28)',size=1){
+  const fs = FS*size; ctx.font = `600 ${fs}px Inter,system-ui,sans-serif`;
+  const tw = ctx.measureText(text).width, ph = fs*1.7, pw = tw + fs*1.2;
+  const lx = Math.max(4, Math.min(W-pw-4, x-pw/2));
+  rr(lx, y-ph/2, pw, ph, ph/2); ctx.fillStyle = 'rgba(8,12,28,.8)'; ctx.fill();
+  ctx.strokeStyle = border; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = `rgb(${rgb})`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(text, lx+fs*.6, y+.5);
+}
+function personPoint(){
+  const fy = FLOORS[state.loc].fy + P.lift, c = Math.cos(P.angle), s = Math.sin(P.angle), ly = -40;
+  return { x:P.x - ly*s, y:fy + ly*c };
+}
+function polyLen(p){ let L=0; for(let i=1;i<p.length;i++) L += Math.hypot(p[i].x-p[i-1].x, p[i].y-p[i-1].y); return L; }
+function pointAt(p,d){ for(let i=1;i<p.length;i++){ const a=p[i-1], b=p[i], l=Math.hypot(b.x-a.x,b.y-a.y); if(d<=l){ const u=d/l; return {x:a.x+(b.x-a.x)*u, y:a.y+(b.y-a.y)*u}; } d-=l; } return p[p.length-1]; }
+
+/* ---------- signal model ---------- */
+function activity(t){
+  if (P.phase === 'walk') return 16*Math.sin(t*7.2) + 7*Math.sin(t*12.7+1.3) + 3*Math.sin(t*3.1);
+  if (P.phase === 'fall'){ const p = (t-P.t0)/.6; return 52*Math.sin(p*Math.PI*3.5)*(1-.35*p) + (Math.random()-.5)*14; }
+  const since = t - P.lieT; return 22*Math.exp(-since*5)*Math.sin(since*25) + 1.2*Math.sin(t*1.8);
+}
+function sample(rx,t){
+  const k = rx.floor === state.loc ? 1 : .07;
+  return k*activity(t) + (Math.random()-.5)*3.2;
+}
+
+/* ---------- update ---------- */
+function update(dt){
+  const t = (state.time += dt);
+  for (const k of ['router','s1']){
+    if (!active(DEV[k])) { rings[k].length = 0; continue; }
+    ringT[k] -= dt; if (ringT[k] <= 0){ rings[k].push(0); ringT[k] += .6; }
+    rings[k] = rings[k].map(r => r + 250*dt).filter(r => r < 700);
+  }
+  if (P.phase === 'walk'){
+    const [a,b] = RANGE[state.loc];
+    P.x += P.dir*45*dt; if (P.x > b){ P.x = b; P.dir = -1; } if (P.x < a){ P.x = a; P.dir = 1; }
+    P.wp += dt*7;
+  } else if (P.phase === 'fall'){
+    const p = Math.min(1, (t-P.t0)/.6);
+    P.angle = Math.PI/2*p*p; P.lift = -7*p;
+    if (p >= 1){ P.phase = 'lie'; P.lieT = t; }
+  }
+  sampleAcc += dt;
+  while (sampleAcc >= .02){
+    sampleAcc -= .02;
+    RX.forEach((rx,i) => { const on = active(DEV[rx.key]); charts[i].data.push(on ? sample(rx,t) : 0); charts[i].data.shift(); });
+  }
+  updateAI(t);
+}
+
+/* ---------- AI panel ---------- */
+let lastAI = '';
+function setAI(label, sub, conf, barCol, step, mode){
+  const key = label+sub+Math.round(conf)+step+mode;
+  if (key === lastAI) return; lastAI = key;
+  $('aiLabel').textContent = label; $('aiSub').textContent = sub;
+  $('aiBar').style.width = conf + '%';
+  $('aiBar').style.background = barCol;
+  $('aiConf').textContent = conf > 0 ? `AI confidence: ${Math.round(conf)}%` : 'AI confidence: none';
+  [...$('steps').children].forEach((el,i) => {
+    el.className = '';
+    if (i <= step) el.classList.add('on');
+    if (i === step && mode === 'hot') el.classList.add('hot');
+    if (i === 3 && mode === 'alert') el.className = 'alert';
+  });
+}
+const GRAD = 'linear-gradient(90deg,var(--cyan),var(--violet))';
+function updateAI(t){
+  const cov = covered();
+  if (P.phase === 'walk'){
+    if (cov) setAI('🚶 Walking', 'Normal movement. All good.', 94 + Math.round(Math.sin(t)*2), GRAD, 2, 'hot');
+    else setAI('❓ Can\'t see clearly', 'No receiver on the person\'s floor', 12, 'var(--amber)', 1, '');
+    return;
+  }
+  if (P.phase === 'fall'){
+    if (cov) setAI('⚠️ Sudden big change!', 'The signal jumped. Possible fall', 70, 'var(--amber)', 2, 'hot');
+    else setAI('… tiny flicker', 'Signal from upstairs is too weak', 10, 'var(--amber)', 1, '');
+    return;
+  }
+  const since = t - P.lieT;
+  if (cov){
+    if (since < 2) setAI('⏳ Checking for movement…', `No movement for ${since.toFixed(1)} s`, Math.min(95, 72 + since*11), 'var(--amber)', 2, 'hot');
+    else {
+      setAI('🚨 FALL DETECTED', 'Alert sent to family', 97, 'var(--red)', 3, 'alert');
+      if (!det.alert){ det.alert = true;
+        $('alertBody').innerHTML = (state.loc ? 'Bedroom · First floor' : 'Living room · Ground floor') + '<br>No movement for 2 seconds';
+        $('alertCard').classList.add('show'); }
+    }
+  } else {
+    if (since < 2.4) setAI('❓ Not sure', 'Signal too weak to tell', 8, 'var(--amber)', 1, '');
+    else { setAI('❌ Fall missed', 'The concrete floor blocked the signal', 0, 'var(--red)', 1, '');
+      if (!det.missed){ det.missed = true; $('missCard').classList.add('show'); } }
+  }
+}
+
+/* ---------- drawing ---------- */
+function drawSky(t){
+  const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#070b1c'); g.addColorStop(1,'#101a38');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  stars.forEach(s => { ctx.fillStyle = `rgba(220,230,255,${.35+.35*Math.sin(t*1.5+s.p)})`; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,7); ctx.fill(); });
+  glow(905,62,90,'200,215,255',.18);
+  ctx.fillStyle = '#e9eeff'; ctx.beginPath(); ctx.arc(905,62,22,0,7); ctx.fill();
+  ctx.fillStyle = '#0c1430'; ctx.beginPath(); ctx.arc(915,55,20,0,7); ctx.fill();
+  const gg = ctx.createLinearGradient(0,600,0,H); gg.addColorStop(0,'#123326'); gg.addColorStop(1,'#07120d');
+  ctx.fillStyle = gg; ctx.fillRect(0,600,W,H-600);
+  ctx.strokeStyle = 'rgba(75,240,166,.25)'; ctx.lineWidth = 2; line(0,601,W,601);
+}
+function drawHouseBody(){
+  // roof
+  ctx.beginPath(); ctx.moveTo(70,184); ctx.lineTo(500,66); ctx.lineTo(930,184); ctx.closePath();
+  const rg = ctx.createLinearGradient(0,66,0,184); rg.addColorStop(0,'#1d2850'); rg.addColorStop(1,'#111a36');
+  ctx.fillStyle = rg; ctx.fill(); ctx.strokeStyle = 'rgba(170,195,255,.45)'; ctx.lineWidth = 3; ctx.stroke();
+  // rooms
+  FLOORS.forEach(f => {
+    const g = ctx.createLinearGradient(0,f.y,0,f.y+f.h); g.addColorStop(0,'#19233f'); g.addColorStop(1,'#10172e');
+    ctx.fillStyle = g; ctx.fillRect(f.x,f.y,f.w,f.h);
+  });
+  // warm lamps
+  [[300,196,170],[770,196,120],[380,416,170],[740,416,130]].forEach(([x,y,r]) => {
+    glow(x,y,r,'255,190,120',.11);
+    ctx.strokeStyle = 'rgba(200,210,240,.25)'; ctx.lineWidth = 1.5; line(x, y-16, x, y);
+    ctx.fillStyle = 'rgba(255,214,150,.9)'; ctx.beginPath(); ctx.arc(x,y+2,4,0,7); ctx.fill();
+  });
+  // furniture
+  const fill = 'rgba(170,190,255,.10)', st = 'rgba(170,190,255,.22)';
+  const box = (x,y,w,h,r=6) => { rr(x,y,w,h,r); ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = st; ctx.lineWidth = 1.2; ctx.stroke(); };
+  box(470,350,136,30,6); box(600,322,10,58,3); box(480,340,38,12,5);            // bed
+  box(680,338,150,42,18); box(830,250,8,40,3); box(700,226,60,46,6);            // bathtub, shower, mirror
+  box(240,560,130,40,10); box(232,548,22,52,8); box(356,548,22,52,8);           // sofa
+  box(112,556,82,6,2); box(118,562,5,38,2); box(184,562,5,38,2);                // router table
+  box(600,552,220,48,4); box(832,500,56,100,6);                                 // kitchen counter, fridge
+  [[506,532,52],[110,314,52],[566,304,52]].forEach(([x,y,w]) => box(x,y,w,5,2)); // shelves
+}
+function clipRegion(i){
+  ctx.beginPath();
+  if (i < 2){ const f = FLOORS[i]; ctx.rect(f.x,f.y,f.w,f.h); ctx.clip(); }
+  else { ctx.rect(0,0,W,H); ctx.rect(HOUSE.x,HOUSE.y,HOUSE.w,HOUSE.h); ctx.clip('evenodd'); }
+}
+function drawWaves(){
+  const senders = ['router','s1'].filter(k => active(DEV[k]));
+  for (let region = 0; region < 3; region++){
+    ctx.save(); clipRegion(region);
+    ctx.globalCompositeOperation = 'lighter';
+    senders.forEach(k => {
+      const d = DEV[k], f = region === 2 ? .22 : (region === d.floor ? 1 : .08);
+      glow(d.x, d.y, 430, C.cyan, .13*f);
+      rings[k].forEach(r => {
+        const a = .6*(1 - r/700)*f; if (a < .008) return;
+        ctx.beginPath(); ctx.arc(d.x,d.y,r,0,7);
+        ctx.strokeStyle = `rgba(${C.cyan},${a*.22})`; ctx.lineWidth = 9; ctx.stroke();
+        ctx.strokeStyle = `rgba(${C.cyan},${a})`; ctx.lineWidth = 1.6; ctx.stroke();
+      });
+    });
+    ctx.restore();
+  }
+}
+function drawStructure(){
+  ctx.strokeStyle = 'rgba(170,195,255,.55)'; ctx.lineWidth = 8; ctx.lineCap = 'butt';
+  ctx.strokeRect(HOUSE.x, HOUSE.y, HOUSE.w, HOUSE.h);
+  ctx.lineWidth = 6; line(620,180,620,292); line(560,400,560,505);
+  // concrete slab
+  const g = ctx.createLinearGradient(0,380,0,400); g.addColorStop(0,'#6b7389'); g.addColorStop(1,'#3d4357');
+  ctx.fillStyle = g; ctx.fillRect(96,380,808,20);
+  ctx.save(); ctx.beginPath(); ctx.rect(96,380,808,20); ctx.clip();
+  ctx.strokeStyle = 'rgba(20,24,36,.45)'; ctx.lineWidth = 2;
+  for (let x = 90; x < 920; x += 14) line(x,402,x+22,378);
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(200,210,235,.5)'; ctx.lineWidth = 1; line(96,380.5,904,380.5);
+}
+function drawPath(pts, rgb, alpha, dashed, speed=230){
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  ctx.strokeStyle = `rgba(${rgb},${alpha*.4})`; ctx.lineWidth = 1.6;
+  if (dashed) ctx.setLineDash([5,7]);
+  ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y); for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y); ctx.stroke();
+  ctx.setLineDash([]);
+  const L = polyLen(pts), n = Math.max(3, Math.round(L/70)), sp = L/n;
+  for (let i = 0; i < n; i++){
+    const p = pointAt(pts, (state.time*speed + i*sp) % L);
+    glow(p.x, p.y, 11, rgb, alpha*.9);
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.beginPath(); ctx.arc(p.x,p.y,2,0,7); ctx.fill();
+  }
+  ctx.restore();
+}
+function drawPaths(){
+  const pp = personPoint(), personRGB = P.phase === 'walk' ? C.green : (det.alert ? C.red : C.amber);
+  LINKS.forEach(([s,r,floor]) => {
+    const A = DEV[s], B = DEV[r]; if (!active(A)) return;
+    drawPath([A,B], C.cyan, .55, false);
+    drawPath([A,{x:(A.x+B.x)/2, y:FLOORS[floor].ceil+6},B], C.violet, .5, false);
+    if (floor === state.loc) drawPath([A,pp,B], personRGB, .95, false, 260);
+  });
+  if (!covered()) drawPath([DEV.router, pp, DEV.r0], C.green, .12, true);
+}
+function drawDevice(d, ghost){
+  const t = state.time;
+  ctx.save(); ctx.translate(d.x, d.y);
+  if (ghost){
+    ctx.setLineDash([4,4]); ctx.strokeStyle = 'rgba(170,190,255,.35)'; ctx.lineWidth = 1.5;
+    rr(-15,-10,30,20,4); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(170,190,255,.5)'; ctx.font = `700 14px system-ui`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('+',0,1);
+    ctx.restore(); return;
+  }
+  const rgb = d.type === 'rx' ? C.green : C.cyan;
+  glow(0,0,30 + 4*Math.sin(t*4), rgb, .28);
+  if (d.type === 'router'){
+    ctx.strokeStyle = '#9fb3d9'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    line(-14,-6,-19,-26); line(14,-6,19,-26);
+    rr(-24,-9,48,18,6); ctx.fillStyle = '#16213f'; ctx.fill(); ctx.strokeStyle = `rgba(${C.cyan},.8)`; ctx.lineWidth = 1.5; ctx.stroke();
+    for (let i = 0; i < 4; i++){ ctx.fillStyle = `rgba(${C.cyan},${.4+.6*Math.abs(Math.sin(t*5+i))})`; ctx.beginPath(); ctx.arc(-12+i*8,0,2.2,0,7); ctx.fill(); }
+  } else {
+    rr(-15,-10,30,20,3); ctx.fillStyle = '#123a5c'; ctx.fill(); ctx.strokeStyle = `rgba(${rgb},.9)`; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = '#0a1626'; ctx.fillRect(-8,-6,11,12); ctx.strokeStyle = 'rgba(200,210,235,.4)'; ctx.lineWidth = 1; ctx.strokeRect(-8,-6,11,12);
+    ctx.strokeStyle = 'rgba(220,200,120,.7)';
+    for (let i = -12; i <= 12; i += 4){ line(i,-10,i,-13); line(i,10,i,13); }
+    ctx.fillStyle = `rgba(${rgb},${.4+.6*Math.abs(Math.sin(t*(d.type==='rx'?6:4)))})`; ctx.beginPath(); ctx.arc(9,-4,2.4,0,7); ctx.fill();
+  }
+  ctx.restore();
+}
+function drawPerson(){
+  const fy = FLOORS[state.loc].fy + P.lift, cp = personPoint();
+  const rgb = det.alert ? C.red : (P.phase === 'walk' ? C.green : C.amber);
+  glow(cp.x, cp.y, det.alert ? 80 + 10*Math.sin(state.time*6) : 66, rgb, .32);
+  if (P.phase === 'walk'){ ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(P.x, fy+1, 16, 4, 0, 0, 7); ctx.fill(); }
+  ctx.save(); ctx.translate(P.x, fy); ctx.rotate(P.angle);
+  const sw = P.phase === 'walk' ? Math.sin(P.wp) : 0, f = P.phase === 'walk' ? 0 : 12;
+  ctx.lineCap = 'round'; ctx.strokeStyle = '#eef3ff'; ctx.lineWidth = 6.5;
+  line(0,-26, 11*sw,0); line(0,-26,-11*sw,0);
+  line(0,-28,0,-54);
+  line(0,-50,-10*sw-f,-32); line(0,-50,10*sw+f,-32);
+  ctx.fillStyle = '#eef3ff'; ctx.beginPath(); ctx.arc(0,-66,9.5,0,7); ctx.fill();
+  ctx.restore();
+}
+function drawLabels(){
+  ctx.font = `700 ${FS*.78}px Inter,system-ui,sans-serif`; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillStyle = 'rgba(180,195,230,.55)';
+  [['BEDROOM · 1ST FLOOR',114,192],['BATHROOM',636,192],['LIVING ROOM · GROUND',114,412],['KITCHEN',576,412]]
+    .forEach(([s,x,y]) => ctx.fillText(s,x,y));
+  Object.values(DEV).forEach(d => { if (active(d)) pill(d.label, d.x, d.y + d.ly, d.type === 'rx' ? C.green : C.cyan); });
+  pill('Concrete floor: blocks Wi-Fi', 770, 390, '200,208,228', 'rgba(200,208,228,.35)', .85);
+  if (!covered()){
+    const pp = personPoint();
+    pill('✕ Signal blocked', pp.x + 10, 392, C.red, 'rgba(255,93,108,.6)', .9);
+  }
+}
+function draw(){
+  ctx.setTransform(DPR*S,0,0,DPR*S,0,0);
+  const t = state.time;
+  drawSky(t); drawHouseBody(); drawWaves(); drawStructure(); drawPaths();
+  Object.values(DEV).forEach(d => drawDevice(d, !active(d)));
+  drawPerson(); drawLabels();
+  charts.forEach((c,i) => drawChart(c, i));
+}
+function drawChart(c, i){
+  const g = c.el.getContext('2d'), w = c.el.width, h = c.el.height;
+  if (!w || !h) return;
+  g.clearRect(0,0,w,h);
+  g.strokeStyle = 'rgba(140,170,255,.10)'; g.lineWidth = DPR;
+  [.25,.5,.75].forEach(f => { g.beginPath(); g.moveTo(0,h*f); g.lineTo(w,h*f); g.stroke(); });
+  const rx = RX[i], on = active(DEV[rx.key]);
+  if (!on){
+    g.fillStyle = 'rgba(147,160,191,.85)'; g.font = `${12*DPR}px system-ui,sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('No receiver on this floor', w/2, h/2); return;
+  }
+  const hot = rx.floor === state.loc && (P.phase === 'fall' || (P.phase === 'lie' && state.time - P.lieT < .4));
+  const alert = det.alert && rx.floor === state.loc;
+  const grad = g.createLinearGradient(0,0,w,0);
+  if (hot || alert){ grad.addColorStop(0,'#ffc04d'); grad.addColorStop(1,'#ff5d6c'); }
+  else { grad.addColorStop(0,'#4fd8ff'); grad.addColorStop(1,'#a98bff'); }
+  g.save(); g.shadowColor = hot || alert ? 'rgba(255,93,108,.8)' : 'rgba(79,216,255,.7)'; g.shadowBlur = 8*DPR;
+  g.strokeStyle = grad; g.lineWidth = 2*DPR; g.lineJoin = 'round'; g.beginPath();
+  c.data.forEach((v,j) => { const x = j/(N-1)*w, y = h/2 - Math.max(-60,Math.min(60,v))/60*(h/2-4*DPR); j ? g.lineTo(x,y) : g.moveTo(x,y); });
+  g.stroke(); g.restore();
+}
+
+/* ---------- UI ---------- */
+function caption(){
+  if (state.mode === 'A' && state.loc === 1) return '⚠️ Only one router, downstairs. The concrete floor blocks most Wi-Fi waves, so the receiver can\'t "see" the person upstairs. Press <b>Simulate a fall</b> to see what happens.';
+  if (state.mode === 'A') return '✅ The router and receiver are in the same room, so every movement shows up clearly in the signal. Next, try <b>Bedroom (1st floor)</b>.';
+  return '✅ Each floor has its own ESP32 sender and receiver, so the whole house is covered. Try a fall on either floor!';
+}
+function tags(){
+  RX.forEach((rx,i) => {
+    const el = $('tag'+i);
+    if (!active(DEV[rx.key])){ el.textContent = 'not installed'; el.className = 'tag'; }
+    else if (rx.floor === state.loc){ el.textContent = '👤 person in range'; el.className = 'tag g'; }
+    else { el.textContent = 'no one in range'; el.className = 'tag'; }
+  });
+}
+function reset(){
+  P.phase = 'walk'; P.angle = 0; P.lift = 0; P.x = RANGE[state.loc][0] + 20; P.dir = 1;
+  det.alert = det.missed = false;
+  $('alertCard').classList.remove('show'); $('missCard').classList.remove('show');
+  $('caption').innerHTML = caption(); tags(); refreshButtons();
+}
+function refreshButtons(){
+  document.querySelectorAll('#modeSeg button').forEach(b => { const on = b.dataset.mode === state.mode; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  document.querySelectorAll('#locSeg button').forEach(b => { const on = +b.dataset.loc === state.loc; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  $('fallBtn').disabled = P.phase !== 'walk';
+}
+document.querySelectorAll('#modeSeg button').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; reset(); });
+document.querySelectorAll('#locSeg button').forEach(b => b.onclick = () => { state.loc = +b.dataset.loc; reset(); });
+document.querySelectorAll('[data-reset]').forEach(b => b.onclick = reset);
+$('fixBtn').onclick = () => { state.mode = 'B'; reset(); };
+$('fallBtn').onclick = () => { if (P.phase !== 'walk') return; P.phase = 'fall'; P.t0 = state.time; refreshButtons(); };
+
+resize(); reset();
+let last = performance.now();
+function frame(now){
+  const dt = Math.min(.05, (now-last)/1000); last = now;
+  update(dt); draw();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
