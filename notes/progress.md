@@ -33,3 +33,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-08: Explained NILM (electricity breakdown) with explainer + lit note; Home Guardian still main.
 - 2026-11-08: Community ideas set 7 (notes/ideas/topic-options-7-community.md); awaiting her pick.
 - 2026-11-08: Suggested Wi-Fi stampede early warning (notes/ideas/better-idea-crowd-safety.md); awaiting her view.
+- 2026-11-08: Set 8 of all-new ideas (notes/ideas/topic-options-8.md); awaiting her pick.
