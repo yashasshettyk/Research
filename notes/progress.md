@@ -30,3 +30,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-07: one-page PDF made (`paper/drafts/home-guardian-one-pager.pdf`). Next: live dashboard on simulated data.
 - 2026-11-07: Corner coverage answered (explainers/wifi-corner-coverage.html, literature/notes/wifi-sensing-coverage.md, design section 7). Next: live dashboard on simulated data.
 - 2026-11-08: 5 fresh ideas (notes/ideas/topic-options-6.md); Home Guardian stays main. Next: live dashboard.
+- 2026-11-08: Explained NILM (electricity breakdown) with explainer + lit note; Home Guardian still main.

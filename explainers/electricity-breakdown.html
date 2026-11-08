@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electricity Bill Breakdown</title>
+<style>
+:root{--bg:#f6f8fb;--card:#fcfcfb;--ink:#1d2733;--muted:#5b6776;--line:#d5dde7;--grid:#e7ecf2;--navy:#1f3a5f;--good:#1b8a5a;--total:#7d8794;
+--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11161d;--card:#1a1a19;--ink:#e6ebf1;--muted:#9aa6b4;--line:#2d3744;--grid:#2a2f36;--navy:#8fb3e8;--total:#8f99a6;
+--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500}}
+:root[data-theme="dark"]{--bg:#11161d;--card:#1a1a19;--ink:#e6ebf1;--muted:#9aa6b4;--line:#2d3744;--grid:#2a2f36;--navy:#8fb3e8;--total:#8f99a6;
+--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:1.45rem;color:var(--navy);margin:.3em 0}
+h2{font-size:1.1rem;color:var(--navy);margin:0 0 .4em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+.answer{border-left:6px solid var(--good)}
+.step{display:inline-block;background:var(--navy);color:var(--bg);border-radius:20px;padding:0 10px;font-size:.8rem;font-weight:700;margin-bottom:6px}
+.muted{color:var(--muted);font-size:.9rem}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+button{flex:1 1 200px;border:2px solid var(--navy);background:transparent;color:var(--navy);border-radius:10px;padding:9px;font:inherit;font-weight:600;cursor:pointer}
+button.on{background:var(--navy);color:var(--bg)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;margin:6px 0 2px;min-height:1.4em}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+.chart{position:relative}
+.chart svg{display:block;width:100%}
+.tip{position:absolute;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:.8rem;
+box-shadow:0 2px 8px rgba(0,0,0,.15);white-space:nowrap;display:none;z-index:2}
+.tip i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.tip b{font-weight:700}
+.fp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.fp{grid-template-columns:1fr}}
+.fp div{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.fp svg{width:100%;height:46px;display:block;margin:4px 0}
+.fp b::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;background:var(--c)}
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px;font-size:.9rem;text-align:center}
+.flow span{border:2px solid var(--navy);border-radius:10px;padding:6px 10px;font-weight:600}
+.flow em{font-style:normal;color:var(--muted);font-size:1.2rem}
+ol{padding-left:1.2em;margin:.3em 0}li{margin:.35em 0}
+.bars .row{display:grid;grid-template-columns:minmax(90px,120px) 1fr;align-items:center;gap:8px;margin:6px 0;font-size:.9rem}
+.bars .track{position:relative;height:22px}
+.bars .fill{height:100%;border-radius:0 4px 4px 0;background:var(--c);min-width:4px}
+.bars .val{position:absolute;top:1px;font-size:.82rem;white-space:nowrap}
+footer{font-size:.78rem;color:var(--muted);margin:18px 0 8px}
+footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<h1>Which appliance eats my electricity bill?</h1>
+
+<div class="card answer">
+<b>Short answer:</b> every appliance leaves its own <b>"fingerprint"</b> in the total power your meter sees.
+A computer program learns these fingerprints and <b>splits the one total into parts</b>: this much for the AC, this much for the fridge, and so on.<br>
+<span class="muted">The research name is <b>NILM</b> (Non-Intrusive Load Monitoring) = finding each appliance's share <i>without</i> putting a sensor on each appliance.</span>
+</div>
+
+<div class="card">
+<span class="step">STEP 1</span>
+<h2>The meter sees only one line</h2>
+<p class="muted" style="margin:0">One day in a home. Tap the buttons, then move your finger or mouse over the graph.</p>
+<div class="btns">
+  <button id="bMeter" class="on">What the meter sees</button>
+  <button id="bSplit">What the program finds</button>
+</div>
+<div class="legend" id="legend"></div>
+<div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+<p class="muted" id="cap"></p>
+</div>
+
+<div class="card">
+<span class="step">STEP 2</span>
+<h2>Each appliance has a fingerprint</h2>
+<div class="fp">
+  <div style="--c:var(--s3)"><b>Fridge</b>
+    <svg viewBox="0 0 200 46" preserveAspectRatio="none"><path d="M0 40 H15 V30 H40 V40 H65 V30 H90 V40 H115 V30 H140 V40 H165 V30 H190 V40 H200" fill="none" stroke="var(--s3)" stroke-width="2"/></svg>
+    <span class="muted">Small bumps (~150 W), on and off every ~45 min, all day and night.</span></div>
+  <div style="--c:var(--s2)"><b>Geyser</b>
+    <svg viewBox="0 0 200 46" preserveAspectRatio="none"><path d="M0 42 H70 V4 H95 V42 H200" fill="none" stroke="var(--s2)" stroke-width="2"/></svg>
+    <span class="muted">Very tall (~2000 W) but short (~30 min), mostly in the morning.</span></div>
+  <div style="--c:var(--s1)"><b>AC</b>
+    <svg viewBox="0 0 200 46" preserveAspectRatio="none"><path d="M0 42 H30 V18 H60 V21 H95 V17 H130 V20 H170 V42 H200" fill="none" stroke="var(--s1)" stroke-width="2"/></svg>
+    <span class="muted">Big (~1100 W) and long (many hours), mostly at night.</span></div>
+  <div style="--c:var(--s4)"><b>Fan, TV &amp; lights</b>
+    <svg viewBox="0 0 200 46" preserveAspectRatio="none"><path d="M0 40 H40 V36 H80 V40 H120 V30 H180 V40 H200" fill="none" stroke="var(--s4)" stroke-width="2"/></svg>
+    <span class="muted">Small (60–300 W), mostly in the evening.</span></div>
+</div>
+</div>
+
+<div class="card">
+<span class="step">STEP 3</span>
+<h2>How the program learns to split it</h2>
+<ol>
+<li><b>Spot the jumps.</b> When the total suddenly goes up or down, something switched on or off. The size of the jump tells how big that appliance is.</li>
+<li><b>Match the fingerprint.</b> "+2000 W for 30 min in the morning" → geyser. "Small bumps every 45 min" → fridge.</li>
+<li><b>Learn from examples.</b> Researchers recorded real homes with a sensor on <i>every</i> appliance plus the total (e.g. REDD from the USA, UK-DALE from the UK). An AI model studies these and learns to split a new total by itself.</li>
+</ol>
+<div class="flow"><span>Total power<br><small>(1 meter)</small></span><em>→</em><span>AI model<br><small>(learned fingerprints)</small></span><em>→</em><span>Power of each<br><small>appliance</small></span></div>
+</div>
+
+<div class="card">
+<span class="step">STEP 4</span>
+<h2>Your bill, split by appliance</h2>
+<p class="muted" style="margin:0 0 4px">Units used in this example day (1 unit = 1 kWh, what your meter counts).</p>
+<div class="bars" id="bars"></div>
+<p class="muted">So here the AC is the "bill eater". Cutting 1 hour of AC saves more than switching off all the lights.</p>
+</div>
+
+<div class="card">
+<h2>Why this can be your M.Tech project</h2>
+Most training data comes from US and UK homes. Indian homes are different (geysers, mixers, inverters, many ceiling fans, voltage ups and downs), and Indian datasets are very few and small (e.g. <b>iAWE</b>: one house in Delhi, 73 days). A model that works well for Indian homes is a real gap.
+</div>
+
+<footer>
+Example data on this page is made up to show the idea.<br>
+Sources: Hart, "Nonintrusive appliance load monitoring," <i>Proc. IEEE</i> 80(12), 1992, <a href="https://doi.org/10.1109/5.192069">doi:10.1109/5.192069</a> ·
+Kolter &amp; Johnson, "REDD: A public data set for energy disaggregation research," SustKDD 2011, <a href="https://zicokolter.com/publications/kolter2011redd.pdf">pdf</a> ·
+Kelly &amp; Knottenbelt, "The UK-DALE dataset…," <i>Scientific Data</i> 2:150007, 2015, <a href="https://doi.org/10.1038/sdata.2015.7">doi:10.1038/sdata.2015.7</a> ·
+Batra et al., "It's Different: Insights into home energy consumption in India," BuildSys 2013, <a href="https://nipunbatra.github.io/papers/2013/buildsys_2013.pdf">pdf</a>
+</footer>
+</main>
+
+<script>
+// ---- made-up day: 5-minute steps ----
+const N=288, H=i=>i*5/60;
+const AP=[ // stacking order bottom -> top; color follows the appliance
+  {k:'fridge',n:'Fridge',c:'--s3'},
+  {k:'fan',n:'Fan, TV & lights',c:'--s4'},
+  {k:'ac',n:'AC',c:'--s1'},
+  {k:'gey',n:'Geyser',c:'--s2'}];
+const D=[];
+for(let i=0;i<N;i++){
+  const h=H(i), m=i*5;
+  const fridge=(m%45)<20?150:0;
+  const gey=(h>=6.5&&h<7.08)?2000:0;
+  const ac=(h>=22||h<5)?1100+((i%7)<3?40:-30):0;
+  let fan=0; if(h>=7&&h<9)fan=120; else if(h>=18.5&&h<23)fan=300; else if(h>=23||h<6)fan=60;
+  D.push({h,fridge,gey,ac,fan,tot:fridge+gey+ac+fan});
+}
+const kwh=k=>D.reduce((s,d)=>s+d[k],0)*5/60/1000;
+
+// ---- chart ----
+const box=document.getElementById('chart'), tip=document.getElementById('tip');
+let mode='meter';
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmtT=h=>{const hh=Math.floor(h)%24, mm=Math.round((h-Math.floor(h))*60);const ap=hh<12?'am':'pm';const h12=hh%12===0?12:hh%12;return h12+':'+String(mm).padStart(2,'0')+' '+ap};
+function draw(){
+  const W=box.clientWidth, Hh=Math.max(230,Math.min(300,W*0.5));
+  const L=48,R=10,T=26,B=28, pw=W-L-R, ph=Hh-T-B, YM=2500;
+  const x=h=>L+h/24*pw, y=v=>T+ph-v/YM*ph;
+  let s=`<svg width="${W}" height="${Hh}" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Power used over one day">`;
+  for(const v of [0,1000,2000]) s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v} W</text>`;
+  for(const h of [0,6,12,18,24]) s+=`<text x="${x(h)}" y="${Hh-8}" text-anchor="${h===0?'start':h===24?'end':'middle'}" font-size="11" fill="var(--muted)">${['12 am','6 am','12 pm','6 pm','12 am'][h/6]}</text>`;
+  const step=(f)=>{let p='';D.forEach((d,i)=>{const X0=x(d.h),X1=x(d.h+5/60),Y=y(f(d));p+=(i?'L':'M')+X0+' '+Y+'L'+X1+' '+Y});return p};
+  if(mode==='meter'){
+    s+=`<path d="${step(d=>d.tot)}L${x(24)} ${y(0)}L${x(0)} ${y(0)}Z" fill="var(--total)" opacity=".22"/>`;
+    s+=`<path d="${step(d=>d.tot)}" fill="none" stroke="var(--total)" stroke-width="2"/>`;
+    // jump notes
+    const note=(h,v,txt,anc)=>`<line x1="${x(h)}" x2="${x(h)}" y1="${y(v)-4}" y2="${y(v)-14}" stroke="var(--ink)"/><text x="${x(h)+(anc==='end'?-4:4)}" y="${y(v)-16}" text-anchor="${anc}" font-size="11" fill="var(--ink)">${txt}</text>`;
+    s+=note(6.5,2200,'Big jump! (+2000 W)','start');
+    s+=note(22,1500,'Big long jump (+1100 W)','end');
+    s+=note(14,170,'small bumps','middle');
+  }else{
+    let base=D.map(()=>0);
+    AP.forEach(a=>{
+      const top=D.map((d,i)=>base[i]+d[a.k]);
+      let p='';D.forEach((d,i)=>{const X0=x(d.h),X1=x(d.h+5/60);p+=(i?'L':'M')+X0+' '+y(top[i])+'L'+X1+' '+y(top[i])});
+      for(let i=N-1;i>=0;i--){const d=D[i];p+='L'+x(d.h+5/60)+' '+y(base[i])+'L'+x(d.h)+' '+y(base[i])}
+      s+=`<path d="${p}Z" fill="var(${a.c})" stroke="var(--card)" stroke-width="1.5" stroke-linejoin="round"/>`;
+      base=top;
+    });
+    const lab=(tx,ty,t,anc='start')=>`<text x="${tx}" y="${ty}" text-anchor="${anc}" font-size="12" font-weight="600" fill="var(--ink)">${t}</text>`;
+    s+=lab(x(1.2),y(1650),'AC');
+    s+=lab(x(7.3),y(2150),'← Geyser');
+    s+=lab(x(13.5),y(360),'Fridge','middle')+`<line x1="${x(13.5)}" x2="${x(13.5)}" y1="${y(320)}" y2="${y(170)}" stroke="var(--ink)"/>`;
+    s+=lab(x(21.7),y(800),'Fan, TV & lights','end')+`<line x1="${x(20.7)}" x2="${x(20.7)}" y1="${y(740)}" y2="${y(470)}" stroke="var(--ink)"/>`;
+  }
+  s+=`<line id="xh" y1="${T}" y2="${T+ph}" stroke="var(--ink)" stroke-width="1" opacity="0"/>`;
+  s+=`<rect id="hit" x="${L}" y="0" width="${pw}" height="${Hh}" fill="transparent"/></svg>`;
+  box.innerHTML=s; box.appendChild(tip);
+  const hit=box.querySelector('#hit'), xh=box.querySelector('#xh');
+  const move=e=>{
+    const r=box.getBoundingClientRect(), cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    const i=Math.max(0,Math.min(N-1,Math.floor((cx-L)/pw*N))), d=D[i];
+    xh.setAttribute('x1',x(d.h+2.5/60));xh.setAttribute('x2',x(d.h+2.5/60));xh.setAttribute('opacity','.5');
+    let t=`<b>${fmtT(d.h)}</b><br>`;
+    if(mode==='meter') t+=`Total: <b>${d.tot} W</b><br><span style="color:var(--muted)">(the meter can't tell who is using it)</span>`;
+    else{ [...AP].reverse().forEach(a=>{t+=`<i style="background:var(${a.c})"></i>${a.n}: <b>${d[a.k]} W</b><br>`}); t+=`Total: <b>${d.tot} W</b>`; }
+    tip.innerHTML=t; tip.style.display='block';
+    const tw=tip.offsetWidth; let left=cx+12; if(left+tw>W-4) left=cx-tw-12;
+    tip.style.left=Math.max(0,left)+'px'; tip.style.top='8px';
+  };
+  const out=()=>{tip.style.display='none';xh.setAttribute('opacity','0')};
+  hit.addEventListener('mousemove',move);hit.addEventListener('touchstart',move,{passive:true});hit.addEventListener('touchmove',move,{passive:true});
+  hit.addEventListener('mouseleave',out);
+  // legend + caption
+  document.getElementById('legend').innerHTML = mode==='meter' ? '' :
+    [...AP].reverse().map(a=>`<span style="--c:var(${a.c})">${a.n}</span>`).join('');
+  document.getElementById('cap').innerHTML = mode==='meter'
+    ? 'One grey line: the <b>total</b> power of the whole house. The jumps are clues.'
+    : 'Same total, now split into coloured parts. Stack them up and you get the grey line again.';
+}
+const bM=document.getElementById('bMeter'), bS=document.getElementById('bSplit');
+bM.onclick=()=>{mode='meter';bM.classList.add('on');bS.classList.remove('on');draw()};
+bS.onclick=()=>{mode='split';bS.classList.add('on');bM.classList.remove('on');draw()};
+addEventListener('resize',draw); draw();
+
+// ---- bars (sorted by units; colour follows appliance) ----
+const tot=kwh('tot');
+const rows=AP.map(a=>({...a,u:kwh(a.k)})).sort((p,q)=>q.u-p.u), max=rows[0].u;
+document.getElementById('bars').innerHTML=rows.map(r=>{
+  const f=(r.u/max).toFixed(3), w=`(100% - 118px) * ${f}`;
+  return `<div class="row"><span>${r.n}</span><div class="track"><div class="fill" style="--c:var(${r.c});width:calc(${w})"></div>
+  <span class="val" style="left:calc(${w} + 6px)"><b>${r.u.toFixed(1)}</b> units (${Math.round(r.u/tot*100)}%)</span></div></div>`}).join('')
+  + `<div class="row"><span><b>Total</b></span><span><b>${tot.toFixed(1)}</b> units</span></div>`;
+</script>
+</body>
+</html>

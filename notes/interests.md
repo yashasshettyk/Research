@@ -19,3 +19,4 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 | 2026-11-07 | Reaffirmed Wi-Fi fall alert as main interest | School-van alert = possible extra use of same tech |
 | 2026-11-07 | Decided to implement Home Guardian: two modes (guardian + theft), self-learning ML, cheap, live dashboard | Design v1: notes/design/home-guardian-v1.md |
 | 2026-11-07 | Asked about corner falls (router outside the room) | Decided: sender inside + 2 receivers + corner test; report accuracy per zone in paper |
+| 2026-11-08 | Curious about electricity bill breakdown (NILM) | Possible backup/mini project; gap = Indian homes data |
