@@ -21,3 +21,4 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 | 2026-11-07 | Asked about corner falls (router outside the room) | Decided: sender inside + 2 receivers + corner test; report accuracy per zone in paper |
 | 2026-11-08 | Curious about electricity bill breakdown (NILM) | Possible backup/mini project; gap = Indian homes data |
 | 2026-11-08 | Asked again for community-help ideas | Values social impact; set 7 given, bus reader recommended |
+| 2026-11-08 | Wanted a "better" idea than lists | Suggested Wi-Fi stampede early warning (same skills as Home Guardian) |
