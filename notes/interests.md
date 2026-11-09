@@ -25,3 +25,4 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 | 2026-11-08 | Wants truly new ideas, no repeats | Set 8 made after checking all past lists |
 | 2026-11-09 | Interested in Kannada sign-board reader | Already done in parts; twist suggested |
 | 2026-11-09 | Did not like sets 8–10; top priority = publish a paper | Paper-focused set 11 |
+| 2026-11-09 | Prefers DL/ML projects (paper-focused) | Set 12: ML method topics |
