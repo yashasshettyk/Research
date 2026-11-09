@@ -24,3 +24,4 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 | 2026-11-08 | Wanted a "better" idea than lists | Suggested Wi-Fi stampede early warning (same skills as Home Guardian) |
 | 2026-11-08 | Wants truly new ideas, no repeats | Set 8 made after checking all past lists |
 | 2026-11-09 | Interested in Kannada sign-board reader | Already done in parts; twist suggested |
+| 2026-11-09 | Did not like sets 8–10; top priority = publish a paper | Paper-focused set 11 |
