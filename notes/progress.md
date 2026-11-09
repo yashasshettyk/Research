@@ -36,3 +36,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-08: Set 8 of all-new ideas (notes/ideas/topic-options-8.md); awaiting her pick.
 - 2026-11-09: Set 9 (notes/ideas/topic-options-9.md); awaiting her pick.
 - 2026-11-09: Sign-board reader checked: not new as-is; twist proposed.
+- 2026-11-09: Set 10 made; awaiting pick.
