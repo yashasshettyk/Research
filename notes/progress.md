@@ -39,3 +39,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-09: Set 10 made; awaiting pick.
 - 2026-11-09: Priority = publishable paper. Set 11 made; awaiting pick.
 - 2026-11-09: Prefers DL/ML. Set 12 made; awaiting pick.
+- 2026-11-09: Set 13 (applied DL) made; awaiting pick.
