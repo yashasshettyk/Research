@@ -26,3 +26,4 @@ Topics she's interested in, ideas, and key decisions. Newest first.
 | 2026-11-09 | Interested in Kannada sign-board reader | Already done in parts; twist suggested |
 | 2026-11-09 | Did not like sets 8–10; top priority = publish a paper | Paper-focused set 11 |
 | 2026-11-09 | Prefers DL/ML projects (paper-focused) | Set 12: ML method topics |
+| 2026-11-12 | Wants ideas that can continue into higher research (PhD) | Set 14 |
