@@ -43,3 +43,4 @@ Running log of what's done and what's next. Updated at the end of each work sess
 - 2026-11-12: Set 14 (PhD-path DL ideas); awaiting pick.
 - 2026-11-12: Set 15 (trending DL areas); asked what she disliked.
 - 2026-11-12: Evidence-backed pick = skin AI for Indian skin; awaiting her reaction.
+- 2026-11-12: Set 16 (20 DL ideas); awaiting pick.
